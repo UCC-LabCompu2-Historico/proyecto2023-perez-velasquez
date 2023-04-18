@@ -1,5 +1,20 @@
-# proyecto2023
+# Proyecto: Juego de la Viborita.
 Estructura de Proyecto Lab de Compu II - 2023
+
+## Autores:
+* **Perez**, Agustina.
+* **Velásquez Borda**, Mateo Josué.
+
+## Link a la página:
+(linkcito)
+
+## Tecnologías usadas:
+* Git.
+* GitHub.
+* Webstorm.
+
+### *Descripción de la Página:*
+La página consiste en el juego de la niñez u adolescencia de todos aquellos adultos que tuvieron las rocas que solían llamar "Telefonos" La idea es la misma, un juego de la viborita que tiene que ir consumiendo esferas y cada vez hacerse más Larga la viborita.
 
 ## Requisitos del Primer Parcial
 
