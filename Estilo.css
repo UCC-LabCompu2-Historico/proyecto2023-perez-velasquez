@@ -1,50 +1,95 @@
+<<<<<<< HEAD
 body{
 <<<<<<< HEAD
+=======
+body {
+>>>>>>> agus
     background-color: #2d2d2d;
+    display: flex;
 }
 
-h1{
-    font-family: 'Aclonica', sans-serif;
+h1 {
+    font-family: 'Aclonica', 'fantasy', sans-serif;
     color: #001ed1;
     font-size: 250%;
-    margin-bottom: 1%;
+    margin-bottom: 5%;
 }
 
-.bicolor{
+.bicolor {
     color: #db3b26;
 }
 
-.gamemode{
+.selector {
+    font-family: 'Aclonica', 'fantasy', sans-serif;
+    font-weight: lighter;
+    color: #c2c2c2;
+    line-height: 10%;
+    display: grid;
+    column-gap: 50px;
+    row-gap: 15px;
+    grid-template-columns: max-content max-content;
+}
+
+.gamemode {
     background-color: #c2c2c2;
     border-radius: 20% 15% 20% 15%;
     position: relative;
-    height: 25px;
-    width: 8%;
+    height: 40px;
+    width: 100px;
+    font-size: 100%;
+    font-family: 'Aclonica', 'fantasy', sans-serif;
+    font-weight: lighter;
 }
 
-canvas{
-    background-color: #c2c2c2;
-    border-color: #1f1f1f;
+.menu {
+    display: grid;
+    padding-top: 5%;
+    column-gap: 5%;
+    row-gap: 5%;
+    max-width: 300px;
+    max-height: 75px;
+    z-index: 1;
+    display: flex;
+    object-position: center;
+    font-family: 'Aclonica', 'fantasy', sans-serif;
+    color: #c2c2c2;
+    text-align: center;
+}
+
+.info {
+    margin-top: 15px;
+}
+
+.parainfo {
+    z-index: 2;
+    max-width: 50px;
+    width: 90%;
+    padding-left: 3%;
+}
+
+button {
+    background-color: transparent;
+    border: none;
+}
+
+.parainfo#restart:hover {
+    transform: rotate(360deg);
+    transition-duration: 3s;
+}
+
+canvas.game {
+    background-color: #1f1f1f;
     margin-left: 5%;
-}
-
-canvas.game{
-    position: center;
-    width: 400px;
+    margin-top: 75px;
+    width: 800px;
     height: 400px;
 }
 
-div.menu{
-    position: center;
-    width: 400px;
-    height: 75px;
-    z-index: 1;
-    background-color: #c2c2c2;
-    margin-left: 5%;
-    margin-top: 2%;
-    margin-bottom: 2%;
+section.input {
+    width: 50%;
 }
 
+<<<<<<< HEAD
 #bomb_menu{
     z-index: 2;
     position: absolute; top: 23%; left: 6%;
@@ -62,4 +107,8 @@ div.menu{
 =======
     border-image-repeat: ;
 >>>>>>> 662f6ab565446969e7e500b8247215498f830b5c
+=======
+section.tablero {
+    width: 50%;
+>>>>>>> agus
 }
