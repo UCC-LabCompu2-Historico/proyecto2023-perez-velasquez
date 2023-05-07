@@ -14,7 +14,7 @@ Estructura de Proyecto Lab de Compu II - 2023
 * Webstorm.
 
 ### *Descripción de la Página:*
-La página consiste en el juego de la niñez u adolescencia de todos aquellos adultos que tuvieron las rocas que solían llamar "Telefonos" La idea es la misma, un juego de la viborita que tiene que ir consumiendo esferas y cada vez hacerse más Larga la viborita.
+La página consiste en uno de los primeros juegos disponibles en las computadoras: el buscaminas. La idea es la misma, un tablero de diferentes dimensiones según el nivel de dificultad seleccionado, con cierta cantidad establecida de bombas desperdigadas por el tablero. El usuario debe ir marcando con banderas donde supone que están las bombas, e ir excavando en donde considere que sea un lugar seguro. Gana el juego cuando despeja todo el tablero, ubicando exitosamente todas las bombas, y pierde en caso de excavar en una celda con una bomba.
 
 ## Requisitos del Primer Parcial
 
