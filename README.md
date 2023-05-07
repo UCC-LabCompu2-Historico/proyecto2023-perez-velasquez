@@ -1,4 +1,4 @@
-# Proyecto: Juego de la Viborita.
+# Proyecto: BuscaMinas.
 Estructura de Proyecto Lab de Compu II - 2023
 
 ## Autores:
