@@ -3,35 +3,75 @@
 <head>
     <meta charset="UTF-8">
     <title>BuscaMinas</title>
+
     <link rel="stylesheet" href="Estilo.css" type="text/css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Aclonica&family=Poppins:wght@500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Aclonica&family=Poppins:wght@500&display=swap"
+          rel="stylesheet">
+    <link rel="shortcut icon" href="Imagenes/favicon.ico" type="image/x-icon">
+
+    <meta content="Agustina Perez" name="author">
+    <meta content="Mateo Velasquez" name="author">
+    <meta content="juego buscaminas" name="description">
+    <meta content="buscaminas, juego, entretenimiento, estrategia" name="keywords">
 </head>
+
 <body>
-<div>
-    <h1>
-        Busca<span class="bicolor">Minas</span>
-    </h1>
-</div>
 
-<div>
-    <select class="gamemode" name="mode">
-        <option value="easy">Facilito</option>
-        <option value="mid">Medio</option>
-        <option value="hard">Dificilito</option>
-    </select>
-</div>
-<div class="menu">
-    <img id="bomb_menu" src="Imagenes/bomba.png">
-    <img id="timer" src="Imagenes/alarma-activada.png">
-    <img id="restart" src="Imagenes/reiniciar.png">
-</div>
+<section id="input">
+    <!--header-->
+    <div>
+        <header>
+            <h1>
+                Busca<span class="bicolor">Minas</span>
+            </h1>
+        </header>
+    </div>
 
-<div>
-    <canvas class="game">
-        aaaa
-    </canvas>
-</div>
+    <!--selector-->
+    <div class="selector">
+        <div class="grid-item">Ancho de</div>
+        <div class="grid-item">Alto de</div>
+        <div class="grid-item">tablero</div>
+        <div class="grid-item">tablero</div>
+        <div class="grid-item">
+            <select class="gamemode" name="ancho">
+                <option value="10w">10</option>
+                <option value="15w">15</option>
+                <option value="20w">20</option>
+            </select>
+        </div>
+        <div class="grid-item">
+            <select class="gamemode" name="alto">
+                <option value="10h">10</option>
+                <option value="15h">15</option>
+                <option value="20h">20</option>
+            </select>
+        </div>
+    </div>
+
+    <!--menu-->
+    <div class="menu">
+        <div class="grid-item"><img class="parainfo" id="bomb_menu" src="Imagenes/bomba.png"></div>
+        <div class="info" id="contador"> 10</div>
+        <div class="grid-item"><img class="parainfo" id="timer" src="Imagenes/alarma-activada.png"></div>
+        <div class="info" id="temp"> 00:00</div>
+        <div class="grid-item">
+            <button onclick="location.reload()"><img class="parainfo" id="restart" src="Imagenes/reiniciar.png">
+            </button>
+        </div>
+    </div>
+</section>
+
+<section id="tablero">
+    <!--tablero-->
+    <div>
+        <canvas class="game">
+            aaaa
+        </canvas>
+    </div>
+</section>
+
 </body>
 </html>
