@@ -31,19 +31,19 @@
 
     <!--selector-->
     <div class="selector">
-        <div class="grid-item">Ancho de</div>
-        <div class="grid-item">Alto de</div>
-        <div class="grid-item">tablero</div>
-        <div class="grid-item">tablero</div>
+        <div class="grid-item"><label for="ancho">Ancho de</label></div>
+        <div class="grid-item"><label for="alto">Alto de</label></div>
+        <div class="grid-item"><label for="ancho">tablero</label></div>
+        <div class="grid-item"><label for="alto">tablero</label></div>
         <div class="grid-item">
-            <select class="gamemode" name="ancho">
+            <select class="gamemode" name="ancho" id="ancho">
                 <option value="10w">10</option>
                 <option value="15w">15</option>
                 <option value="20w">20</option>
             </select>
         </div>
         <div class="grid-item">
-            <select class="gamemode" name="alto">
+            <select class="gamemode" name="alto" id="alto">
                 <option value="10h">10</option>
                 <option value="15h">15</option>
                 <option value="20h">20</option>
@@ -53,16 +53,24 @@
 
     <!--menu-->
     <div class="menu">
-        <div class="grid-item"><img class="parainfo" id="bomb_menu" src="Imagenes/bomba.png"></div>
+        <div class="grid-item"><img class="parainfo" id="bomb_menu" src="Imagenes/bomba.png" alt="Imagen de una bombita"></div>
         <div class="info" id="contador"> 20</div>
-        <div class="grid-item"><img class="parainfo" id="timer" src="Imagenes/alarma-activada.png"></div>
+        <div class="grid-item"><img class="parainfo" id="timer" src="Imagenes/alarma-activada.png" alt="Imagen de un reloj"></div>
         <div class="info" id="temp"> 00:00</div>
         <div class="grid-item">
-            <button onclick="location.reload()"><img class="parainfo" id="restart" src="Imagenes/reiniciar.png">
+            <button onclick="location.reload()"><img class="parainfo" id="restart" src="Imagenes/reiniciar.png" alt="imagen de un reinicio">
             </button>
         </div>
     </div>
 </section>
+
+
+<footer>
+    <p>Proyecto 2023</p>
+    <p>Perez, Agustina - Velasquez, Mateo.</p>
+    <a href="https://youtu.be/LFECjSinhp0">Como jugar</a>
+</footer>
+
 
 <section id="tablero">
     <!--tablero-->
