@@ -93,8 +93,24 @@ footer {
     left: 0;
     width: 100%;
     text-align: left;
+    text-align: center;
+    line-height: 0.9;
     padding: 10px;
     color: white;
     font-size: 80%;
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Aclonica', 'fantasy', sans-serif;
+}
+a {
+    color: #db3b26;
+    transition: all 0.3s ease;
+    font-size: 100%;;
+}
+
+a:hover{
+    color: #db3b26;
+    font-size: 1.3em;
+}
+
+a:active {
+    color: #001ed1;
 }
