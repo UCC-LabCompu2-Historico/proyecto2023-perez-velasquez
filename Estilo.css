@@ -1,9 +1,4 @@
-<<<<<<< HEAD
-body{
-<<<<<<< HEAD
-=======
 body {
->>>>>>> agus
     background-color: #2d2d2d;
     display: flex;
 }
@@ -89,26 +84,6 @@ section.input {
     width: 50%;
 }
 
-<<<<<<< HEAD
-#bomb_menu{
-    z-index: 2;
-    position: absolute; top: 23%; left: 6%;
-    width:55px;
-}
-#timer{
-    z-index: 2;
-    position: absolute; top: 23%; left: 17.5%;
-    width:60px;
-}
-#restart{
-    z-index: 2;
-    position: absolute; top: 23%; left: 29%;
-    width:60px;
-=======
-    border-image-repeat: ;
->>>>>>> 662f6ab565446969e7e500b8247215498f830b5c
-=======
 section.tablero {
     width: 50%;
->>>>>>> agus
 }
