@@ -114,3 +114,27 @@ a:hover{
 a:active {
     color: #001ed1;
 }
+
+@media only screen and (max-width: 600px) {
+    h1 {
+        font-size: 150%;
+    }
+
+    .selector {
+        line-height: 150%;
+        grid-template-columns: auto auto;
+    }
+
+    .gamemode {
+        height: 30px;
+        width: 75px;
+    }
+
+    .menu {
+        flex-direction: column;
+        max-height: none;
+        padding-top: 15%;
+        column-gap: 0;
+        row-gap: 5%;
+    }
+}
