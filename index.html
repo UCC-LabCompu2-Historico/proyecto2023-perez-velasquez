@@ -30,17 +30,17 @@
     </div>
 
     <!--selector-->
-    <form>
-        <div class="form-group">
+    <form id="informacion">
+        <div class="selector">
             <label for="nombre">Nombre:</label>
-            <input type="text" class="form-control" id="nombre" placeholder="Ingrese su Nombre">
+            <input type="text" class="gamemode" id="nombre" placeholder="Ingrese su Nombre">
         </div>
-        <div>
+        <div class="selector">
             <label for="dificultad">Seleccione su dificultad:</label>
-            <select class="grid-item" name="dificultad" id="dificultad">
-                <option value="facil">fácil</option>
-                <option value="normal">normal</option>
-                <option value="dificil">difícil</option>
+            <select class="gamemode" name="dificultad" id="dificultad">
+                <option value="facil" id="facil">fácil</option>
+                <option value="normal" id="normal">normal</option>
+                <option value="dificil" id="dificil">difícil</option>
                 <!--Agustina (Compañera, no la profe) presta atención que los value y los id están en minúscula y
                 sin tilde, ya sé que soy un perfeccionista, pero de esta manera es más sencillo-->
             </select>
