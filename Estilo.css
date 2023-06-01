@@ -26,7 +26,7 @@ h1 {
     grid-template-columns: max-content max-content;
 }
 
-.gamemode {
+#gamemode {
     background-color: #c2c2c2;
     border-radius: 20% 15% 20% 15%;
     position: relative;
