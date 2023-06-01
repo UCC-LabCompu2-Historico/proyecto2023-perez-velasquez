@@ -33,8 +33,8 @@
 
     <!--input-->
     <div id="input">
-        <label for="gamemode">Modo de juego</label>
-        <select class="gamemode" id="gamemode" onchange="dibujarTablero(this.id)">
+        <label for="dificultad">Modo de juego</label>
+        <select class="gamemode" id="dificultad">
             <option value="10x5">facil</option>
             <option value="20x10">medio</option>
             <option value="40x20">dificil</option>
@@ -42,6 +42,8 @@
         <p>Ingrese su nombre:</p>
         <input type="text" id="nameInput" placeholder="Agus">
     </div>
+
+    <div id="tablero"></div>
 
     <!--menu-->
     <div class="menu">
@@ -68,11 +70,12 @@
 </footer>
 
 <!--tablero-->
+<!--
 <div>
     <canvas class="game" id="tablero">
 
     </canvas>
 </div>
-
+-->
 </body>
 </html>

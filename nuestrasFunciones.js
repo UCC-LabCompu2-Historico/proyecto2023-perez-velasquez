@@ -1,34 +1,28 @@
-const canvas = document.getElementById("tablero");
-const ctx = canvas.getContext("2d");
+const tablero = document.getElementById("tablero");
 const selector = document.getElementById("tamanio");
 
-function dibujarTablero(gamemode) {
-    const [columnas, filas] = gamemode.split("x");
-    const anchoCasilla = (canvas.width / columnas);
-    const altoCasilla = (canvas.height / filas);
+function crearTablero(tamanio) {
+    const [columnas, filas] = tamanio.split("x");
+    tablero.innerHTML = "";
 
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    const anchoCasilla = 800 / columnas;
+    const altoCasilla = 400 / filas;
 
     for (let fila = 0; fila < filas; fila++) {
         for (let columna = 0; columna < columnas; columna++) {
-            const x = columna * anchoCasilla;
-            const y = fila * altoCasilla;
-
-            ctx.fillStyle = "#ccc";
-            ctx.fillRect(x, y, anchoCasilla, altoCasilla);
-            ctx.strokeStyle = "#000";
-            ctx.strokeRect(x, y, anchoCasilla, altoCasilla);
+            const casilla = document.createElement("div");
+            casilla.classList.add("casilla");
+            casilla.style.width = `${anchoCasilla}px`;
+            casilla.style.height = `${altoCasilla}px`;
+            tablero.appendChild(casilla);
         }
     }
 }
+
 selector.addEventListener("change", function () {
     const tamanioSeleccionado = selector.value;
-    dibujarTablero(tamanioSeleccionado);
+    crearTablero(tamanioSeleccionado);
 });
 
-// Dibujar el tablero inicial
-dibujarTablero(selector.value);
-
-let findeljuego = (id) =>{
-
-}
+// Crear el tablero inicial
+crearTablero(selector.value);
