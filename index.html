@@ -33,11 +33,11 @@
 
     <!--input-->
     <div id="input">
-        <label>Modo de juego</label>
-        <select class="gamemode" id="gamemode" onchange="creartablero(this.id)">
-            <option value="1">facil</option>
-            <option value="2">medio</option>
-            <option value="3">dificil</option>
+        <label for="gamemode">Modo de juego</label>
+        <select class="gamemode" id="gamemode" onchange="dibujarTablero(this.id)">
+            <option value="10x5">facil</option>
+            <option value="20x10">medio</option>
+            <option value="40x20">dificil</option>
         </select>
         <p>Ingrese su nombre:</p>
         <input type="text" id="nameInput" placeholder="Agus">
@@ -53,8 +53,9 @@
         </div>
         <div class="info" id="temp"> 00:00</div>
         <div class="grid-item">
-            <label for="restart"><button onclick="location.reload()"><img class="parainfo" id="restart" src="Imagenes/reiniciar.png" alt="Imagen de un reinicio">
-            </button></label>
+            <label for="restart">
+                <button onclick="location.reload()"><img class="parainfo" id="restart" src="Imagenes/reiniciar.png" alt="Imagen de un reinicio"></button>
+            </label>
         </div>
     </div>
 </section>
@@ -69,7 +70,7 @@
 <!--tablero-->
 <div>
     <canvas class="game" id="tablero">
-        aaaa
+
     </canvas>
 </div>
 
