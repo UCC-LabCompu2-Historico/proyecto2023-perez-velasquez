@@ -33,11 +33,19 @@
 
     <!--input-->
     <div id="input">
+<<<<<<< HEAD
         <p>Modo de juego</p>
         <select class="gamemode">
             <option value="1">facil</option>
             <option value="2">medio</option>
             <option value="3">dificil</option>
+=======
+        <label for="gamemode">Modo de juego</label>
+        <select class="gamemode" id="gamemode" onchange="dibujarTablero(this.id)">
+            <option value="10x5">facil</option>
+            <option value="20x10">medio</option>
+            <option value="40x20">dificil</option>
+>>>>>>> mateo
         </select>
         <p>Ingrese su nombre:</p>
         <input type="text" id="nameInput" placeholder="Agus">
@@ -48,11 +56,22 @@
         <div class="grid-item"><img class="parainfo" id="bomb_menu" src="Imagenes/bomba.png" alt="Imagen de una bombita"></div>
         <div class="info" id="contador">00</div>
         <!--Acá hay que poner una variable en js para que salga, segun la dificultad, la cant de bombas correspondientes-->
+<<<<<<< HEAD
         <div class="grid-item"><img class="parainfo" id="timer" src="Imagenes/alarma-activada.png" alt="Imagen de un reloj"></div>
         <div class="info" id="temp"> 00:00</div>
         <div class="grid-item">
             <label for="restart"><button onclick="location.reload()"><img class="parainfo" id="restart" src="Imagenes/reiniciar.png" alt="Imagen de un reinicio">
             </button></label>
+=======
+        <div class="grid-item">
+            <img class="parainfo" id="timer" src="Imagenes/alarma-activada.png" alt="Imagen de un reloj">
+        </div>
+        <div class="info" id="temp"> 00:00</div>
+        <div class="grid-item">
+            <label for="restart">
+                <button onclick="location.reload()"><img class="parainfo" id="restart" src="Imagenes/reiniciar.png" alt="Imagen de un reinicio"></button>
+            </label>
+>>>>>>> mateo
         </div>
     </div>
 </section>
@@ -64,15 +83,12 @@
     <a href="https://youtu.be/LFECjSinhp0" target="_blank">Como jugar</a>
 </footer>
 
+<!--tablero-->
+<div>
+    <canvas class="game" id="tablero">
 
-<section id="tablero">
-    <!--tablero-->
-    <div>
-        <canvas class="game">
-            aaaa
-        </canvas>
-    </div>
-</section>
+    </canvas>
+</div>
 
 </body>
 </html>
