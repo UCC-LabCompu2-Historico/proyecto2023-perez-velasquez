@@ -188,21 +188,13 @@ a:active {
     }
 
     canvas.game {
-<<<<<<< HEAD
-=======
         border: 1px solid black;
->>>>>>> mateo
         width: 100%;
         height: 300px;
         margin-top: 30px;
     }
 
-<<<<<<< HEAD
-    section.input,
-    section.tablero {
-=======
     section.input{
->>>>>>> mateo
         width: 100%;
     }
 }
