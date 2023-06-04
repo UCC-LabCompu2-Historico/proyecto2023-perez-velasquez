@@ -1,0 +1,41 @@
+/*ESTILOS DEL MENU Y LA INFO*/
+
+.menu {
+    display: grid;
+    padding-top: 5%;
+    column-gap: 5%;
+    row-gap: 5%;
+    max-width: 300px;
+    max-height: 75px;
+    z-index: 1;
+    display: flex;
+    object-position: center;
+    font-family: 'Aclonica', 'fantasy', sans-serif;
+    color: #c2c2c2;
+    text-align: center;
+}
+
+.info {
+    margin-top: 15px;
+}
+
+.parainfo {
+    z-index: 2;
+    max-width: 50px;
+    width: 90%;
+    padding-left: 3%;
+}
+
+button {
+    background-color: transparent;
+    border: none;
+}
+
+.parainfo#restart:hover {
+    transform: rotate(360deg);
+    transition-duration: 3s;
+}
+
+section.input {
+    width: 50%;
+}

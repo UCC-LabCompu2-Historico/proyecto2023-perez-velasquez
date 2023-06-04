@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /* Default */
 body {
     background-color: #2d2d2d;
@@ -127,6 +128,8 @@ a:active {
     color: #001ed1;
 }
 
+=======
+>>>>>>> agus
 /* Media query - tablets */
 @media only screen and (max-width: 1024px) {
     h1 {
@@ -188,13 +191,13 @@ a:active {
     }
 
     canvas.game {
+        border: 1px solid black;
         width: 100%;
         height: 300px;
         margin-top: 30px;
     }
 
-    section.input,
-    section.tablero {
+    section.input{
         width: 100%;
     }
 }

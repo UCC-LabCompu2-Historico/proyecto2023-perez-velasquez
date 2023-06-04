@@ -4,7 +4,12 @@
     <meta charset="UTF-8">
     <title>BuscaMinas</title>
 
+    <link rel="stylesheet" href="Estilo1.css" type="text/css">
+    <link rel="stylesheet" href="Estilo2.css" type="text/css">
+    <link rel="stylesheet" href="Estilo3.css" type="text/css">
+    <link rel="stylesheet" href="Estilo4.css" type="text/css">
     <link rel="stylesheet" href="Estilo.css" type="text/css">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Aclonica&family=Poppins:wght@500&display=swap"
@@ -33,11 +38,19 @@
 
     <!--input-->
     <div id="input">
+<<<<<<< HEAD
         <p>Modo de juego</p>
         <select id="gamemode">
             <option value="1">facil</option>
             <option value="2">medio</option>
             <option value="3">dificil</option>
+=======
+        <label for="gamemode">Modo de juego</label>
+        <select class="gamemode" id="gamemode">
+            <option value="facil">facil</option>
+            <option value="intermedio">medio</option>
+            <option value="dificil">dificil</option>
+>>>>>>> agus
         </select>
         <p>Ingrese su nombre:</p>
         <input type="text" id="nameInput" placeholder="Agus">
@@ -48,11 +61,14 @@
         <div class="grid-item"><img class="parainfo" id="bomb_menu" src="Imagenes/bomba.png" alt="Imagen de una bombita"></div>
         <div class="info" id="contador">00</div>
         <!--Acá hay que poner una variable en js para que salga, segun la dificultad, la cant de bombas correspondientes-->
-        <div class="grid-item"><img class="parainfo" id="timer" src="Imagenes/alarma-activada.png" alt="Imagen de un reloj"></div>
+        <div class="grid-item">
+            <img class="parainfo" id="timer" src="Imagenes/alarma-activada.png" alt="Imagen de un reloj">
+        </div>
         <div class="info" id="temp"> 00:00</div>
         <div class="grid-item">
-            <label for="restart"><button onclick="location.reload()"><img class="parainfo" id="restart" src="Imagenes/reiniciar.png" alt="Imagen de un reinicio">
-            </button></label>
+            <label for="restart">
+                <button onclick="location.reload()"><img class="parainfo" id="restart" src="Imagenes/reiniciar.png" alt="Imagen de un reinicio"></button>
+            </label>
         </div>
     </div>
 </section>
@@ -64,15 +80,12 @@
     <a href="https://youtu.be/LFECjSinhp0" target="_blank">Como jugar</a>
 </footer>
 
-
-<section id="tablero">
-    <!--tablero-->
-    <div>
-        <canvas class="game">
-            aaaa
-        </canvas>
-    </div>
-</section>
-
+<!--tablero-->
+<div id="tablero">
+    
+</div>
+<!--<canvas class="game" id="tablero">
+        
+    </canvas>-->
 </body>
 </html>
