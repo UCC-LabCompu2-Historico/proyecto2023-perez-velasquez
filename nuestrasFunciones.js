@@ -1,14 +1,15 @@
 document.addEventListener("DOMContentLoaded", function() {
   const tablero = document.getElementById("tablero");
   const selectDificultad = document.getElementById("gamemode");
+  let campo = [];
 
   /**
-   * Crea el tablero de juego, con celdas segun la dificultad elegida
+   * Crea el tablero de juego, con celdas segun la dificultad elegida, pero en el HTML, es el tablero visible
    * @method crearTablero
-   * @param {const} columnas
-   * @param {const} filas
+   * @param columnas
+   * @param filas
    */
-  function crearTablero(columnas, filas) {
+  let crearTablero = (columnas, filas) => {
     tablero.innerHTML = "";
 
     const anchoCasilla = 800 / columnas;
@@ -22,6 +23,26 @@ document.addEventListener("DOMContentLoaded", function() {
         casilla.style.height = `${altoCasilla}px`;
         tablero.appendChild(casilla);
       }
+    }
+  }
+
+  let vaciarTableroJava = (filas) => {
+    campo = [];
+    for(let i = 0;i<filas;i++){
+      campo.push([]);
+    }
+  }
+
+  let ponerBombas = (columnas,filas) => {
+    let minas = columnas * filas * 0.1;
+    for (let contador = 0; contador < minas; contador++) {
+      let fil;
+      let col;
+      do {
+        fil = Math.floor(Math.random() * filas);
+        col = Math.floor(Math.random() * columnas);
+      } while (campo[fil][col])
+      campo[fil][col] = {valor: -1}
     }
   }
 
