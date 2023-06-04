@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>BuscaMinas</title>
+    <title>BuscaMinas - Página Principal</title>
 
     <!--Hojas de estilos-->
     <link rel="stylesheet" href="Estilo1.css" type="text/css"> <!--Menu, info-->
@@ -19,9 +19,6 @@
     <!--Favicon-->
     <link rel="shortcut icon" href="Imagenes/favicon.ico" type="image/x-icon">
 
-    <!--Hoja de funciones-->
-    <script type="text/javascript" src="nuestrasFunciones.js"></script>
-
     <!--Palabras clave-->
     <meta content="Agustina Perez" name="author">
     <meta content="Mateo Velasquez" name="author">
@@ -31,34 +28,43 @@
 
 <body>
 
-<section id="title">
-    <!--header-->
-    <div>
-        <header>
-            <h1>
-                Busca<span class="bicolor">Minas</span>
-            </h1>
-        </header>
-    </div>
+<!--header-->
+<div>
+    <header>
+        <h1>
+            Busca<span class="bicolor">Minas</span>
+        </h1>
+    </header>
+</div>
 
-    <!--input-->
-    <div id="input">
-        <label for="gamemode">Modo de juego</label>
-        <select class="gamemode" id="gamemode">
-            <option value="facil">facil</option>
-            <option value="intermedio">medio</option>
-            <option value="dificil">dificil</option>
-        </select>
-        <p>Ingrese su nombre:</p>
-        <input type="text" id="nameInput" placeholder="Agus">
-        <button type="submit">Continuar</button>
+<!--menu-->
+<div class="menu">
+    <div class="grid-item"><img class="parainfo" id="bomb_menu" src="Imagenes/bomba.png" alt="Imagen de una bombita"></div>
+    <div class="info" id="contador">00</div>
+    <!--Acá hay que poner una variable en js para que salga, segun la dificultad, la cant de bombas correspondientes-->
+    <div class="grid-item">
+        <img class="parainfo" id="timer" src="Imagenes/alarma-activada.png" alt="Imagen de un reloj">
     </div>
-</section>
+    <div class="info" id="temp"> 00:00</div>
+    <div class="grid-item">
+        <label for="restart">
+            <button onclick="location.href='pagina-principal.html'"><img class="parainfo" id="restart" src="Imagenes/reiniciar.png" alt="Imagen de un reinicio"></button>
+        </label>
+    </div>
+</div>
 
+<!--tablero-->
+<div id="tablero">
+    
+</div>
+<!--<canvas class="game" id="tablero">
+        
+    </canvas>-->
 
 <footer>
     <p>Proyecto 2023</p>
     <p>Perez, Agustina - Velasquez, Mateo.</p>
+    <a href="https://youtu.be/LFECjSinhp0" target="_blank">Cómo jugar</a>
 </footer>
 
 </body>
