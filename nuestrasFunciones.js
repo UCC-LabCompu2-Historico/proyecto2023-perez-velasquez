@@ -1,34 +1,34 @@
-const canvas = document.getElementById("tablero");
-const ctx = canvas.getContext("2d");
-const selector = document.getElementById("tamanio");
+const tablero = document.getElementById("tablero");
+const selectDificultad = document.getElementById("dificultad");
 
-function dibujarTablero(gamemode) {
-    const [columnas, filas] = gamemode.split("x");
-    const anchoCasilla = (canvas.width / columnas);
-    const altoCasilla = (canvas.height / filas);
+function crearTablero(columnas, filas) {
+  tablero.innerHTML = "";
 
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+  const anchoCasilla = 800 / columnas;
+  const altoCasilla = 400 / filas;
 
-    for (let fila = 0; fila < filas; fila++) {
-        for (let columna = 0; columna < columnas; columna++) {
-            const x = columna * anchoCasilla;
-            const y = fila * altoCasilla;
-
-            ctx.fillStyle = "#ccc";
-            ctx.fillRect(x, y, anchoCasilla, altoCasilla);
-            ctx.strokeStyle = "#000";
-            ctx.strokeRect(x, y, anchoCasilla, altoCasilla);
-        }
+  for (let fila = 0; fila < filas; fila++) {
+    for (let columna = 0; columna < columnas; columna++) {
+      const casilla = document.createElement("div");
+      casilla.classList.add("casilla");
+      casilla.style.width = `${anchoCasilla}px`;
+      casilla.style.height = `${altoCasilla}px`;
+      tablero.appendChild(casilla);
     }
+  }
 }
-selector.addEventListener("change", function () {
-    const tamanioSeleccionado = selector.value;
-    dibujarTablero(tamanioSeleccionado);
+
+selectDificultad.addEventListener("change", function () {
+  const dificultadSeleccionada = selectDificultad.value;
+
+  if (dificultadSeleccionada === "facil") {
+    crearTablero(10, 5);
+  } else if (dificultadSeleccionada === "intermedio") {
+    crearTablero(20, 10);
+  } else if (dificultadSeleccionada === "dificil") {
+    crearTablero(40, 20);
+  }
 });
 
-// Dibujar el tablero inicial
-dibujarTablero(selector.value);
-
-let findeljuego = (id) =>{
-
-}
+// Crear el tablero inicial
+crearTablero(10, 5);
