@@ -1,5 +1,4 @@
 document.addEventListener("DOMContentLoaded", function() {
-const selectDificultad = document.getElementById("dificultad");
 const tablero = document.getElementById("tablero");
 const selectDificultad = document.getElementById("gamemode");
 
@@ -35,4 +34,4 @@ selectDificultad.addEventListener("change", function () {
 //Tablero inicial
 crearTablero(10, 5);
 
-}
+});
