@@ -14,7 +14,6 @@ canvas.game {
     height: 400px;
     display: flex;
     flex-wrap: wrap;
-    border: 1px solid #000;
     margin-left: 5%;
     margin-top: 75px;
   }
@@ -22,7 +21,7 @@ canvas.game {
   .casilla {
     width: calc(100% / 10);
     height: calc(100% / 5);
-    border: 1px solid #ccc;
+    border: 1px solid #c2c2c2;
     box-sizing: border-box;
   }
   

@@ -1,17 +1,3 @@
-/**
-  * Envía desde la Landing Page a la Principal al apretar continuar
-  */
-document.getElementById("landingForm").addEventListener("continuar", function(event) {
-  event.preventDefault(); // Evita que el formulario se envíe
-
-  var gameMode = document.getElementById("gameMode").value;
-  var name = document.getElementById("name").value;
-
-  // Redirige a la página principal con los parámetros
-  window.location.href = "pagina-principal.html?gameMode=" + encodeURIComponent(gameMode) + "&name=" + encodeURIComponent(name);
-});
-
-
 document.addEventListener("DOMContentLoaded", function() {
 const tablero = document.getElementById("tablero");
 const selectDificultad = document.getElementById("gamemode");
