@@ -4,10 +4,11 @@ document.addEventListener("DOMContentLoaded", function() {
   let campo = [];
 
   /**
-   * Crea el tablero de juego, con celdas segun la dificultad elegida, pero en el HTML, es el tablero visible
+   * Crea el tablero de juego, con celdas segun la dificultad
+   * elegida, pero en el HTML, es el tablero visible
    * @method crearTablero
-   * @param columnas
-   * @param filas
+   * @param {int} columnas
+   * @param {int} filas
    */
   let crearTablero = (columnas, filas) => {
     tablero.innerHTML = "";
@@ -26,6 +27,11 @@ document.addEventListener("DOMContentLoaded", function() {
     }
   }
 
+  /**
+   * Permite poder vaciar el tablero en caso de ser necesario
+   * @method vaciarTableroJava
+   * @param {int} filas
+   */
   let vaciarTableroJava = (filas) => {
     campo = [];
     for(let i = 0;i<filas;i++){
@@ -33,6 +39,13 @@ document.addEventListener("DOMContentLoaded", function() {
     }
   }
 
+  /**
+   * Coloca las bombas, en diferentes partes del tablero
+   * garantizando que no se superpongan
+   * @method ponerBombas
+   * @param {int} columnas
+   * @param {int} filas
+   */
   let ponerBombas = (columnas,filas) => {
     let minas = columnas * filas * 0.1;
     for (let contador = 0; contador < minas; contador++) {
