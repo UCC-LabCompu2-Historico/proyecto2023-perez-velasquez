@@ -2,6 +2,12 @@ document.addEventListener("DOMContentLoaded", function() {
 const tablero = document.getElementById("tablero");
 const selectDificultad = document.getElementById("gamemode");
 
+/**
+  * Crea el tablero de juego, con celdas segun la dificultad elegida
+  * @method crearTablero
+  * @param {const} columnas
+  * @param {const} filas
+  */
 function crearTablero(columnas, filas) {
   tablero.innerHTML = "";
 
@@ -19,6 +25,11 @@ function crearTablero(columnas, filas) {
   }
 }
 
+/**
+  * Selecciona la dificultad del juego y, en consecuencia, crea el
+  * tablero efectivamente llamando a la función correspondiente
+  * @method selectDificultad
+  */
 selectDificultad.addEventListener("change", function () {
   const dificultadSeleccionada = selectDificultad.value;
 
