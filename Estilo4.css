@@ -15,7 +15,8 @@ canvas.game {
     display: flex;
     flex-wrap: wrap;
     border: 1px solid #000;
-    padding: 10%;
+    margin-left: 5%;
+    margin-top: 75px;
   }
   
   .casilla {
