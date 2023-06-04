@@ -1,7 +1,7 @@
 /**
   * Envía desde la Landing Page a la Principal al apretar continuar
   */
-document.getElementById("landingForm").addEventListener("submit", function(event) {
+document.getElementById("landingForm").addEventListener("continuar", function(event) {
   event.preventDefault(); // Evita que el formulario se envíe
 
   var gameMode = document.getElementById("gameMode").value;
