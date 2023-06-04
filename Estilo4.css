@@ -1,0 +1,9 @@
+/*ESTILOS CANVAS Y TABLERO*/
+
+canvas.game {
+    background-color: #1f1f1f;
+    margin-left: 5%;
+    margin-top: 75px;
+    width: 800px;
+    height: 400px;
+}
