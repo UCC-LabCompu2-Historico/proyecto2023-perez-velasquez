@@ -1,0 +1,27 @@
+/*ESTILOS CANVAS Y TABLERO*/
+/*
+canvas.game {
+    background-color: #1f1f1f;
+    margin-left: 5%;
+    margin-top: 75px;
+    width: 800px;
+    height: 400px;
+}
+*/
+
+#tablero {
+    width: 800px;
+    height: 400px;
+    display: flex;
+    flex-wrap: wrap;
+    margin-left: 5%;
+    margin-top: 75px;
+  }
+  
+  .casilla {
+    width: calc(100% / 10);
+    height: calc(100% / 5);
+    border: 1px solid #c2c2c2;
+    box-sizing: border-box;
+  }
+  
