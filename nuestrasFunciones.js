@@ -53,10 +53,20 @@ document.addEventListener("DOMContentLoaded", function() {
   let mostrarCampo = (filas,columnas) =>{
     for (let f = 0; f < filas; f++) {
       for (let c = 0; c < columnas; c++) {
-        if (campo[f][c] === -1) {
-          let casilla = document.getElementById(`casilla-${f}-${c}`)
-          casilla.innerHTML = '<span class="bomb-letter">B</span>';
-          casilla.style.color = "black";
+        let casilla;
+        switch (campo[f][c]){
+          case -1:
+            casilla = document.getElementById(`casilla-${f}-${c}`)
+            casilla.innerHTML = '<span class="bomb-letter">B</span>';
+            break;
+          case 0:
+            casilla = document.getElementById(`casilla-${f}-${c}`)
+            casilla.innerHTML = '<span class="vacia">X</span>';
+            break;
+          default:
+            casilla = document.getElementById(`casilla-${f}-${c}`)
+            casilla.innerHTML = `<span class="contorno">${campo[f][c]}</span>`;
+            break;
         }
       }
     }
@@ -189,3 +199,90 @@ canvas.addEventListener("click", function(event) {
   crearTablero(10, 5);
   crearCampo(10,5);
 });
+/*
+ function crearPantalla() {
+      let cad = ''
+      for (let f = 0; f < 10; f++) {
+        for (c = 0; c < 10; c++) {
+          cad += `<span class="celda gris" id="celda${f}${c}" data-fila="${f}" data-columna="${c}"></span>`
+        }
+      }
+      document.querySelector(".contenedor").innerHTML = cad
+    }
+
+    function destapar(arreglo, fila, columna, evento) {
+      if (arreglo[fila][columna] === 'b') {
+        evento.target.style.backgroundColor = 'red'
+        setTimeout(() => alert('Perdiste'), 10);
+        estado = false
+      } else {
+        if (arreglo[fila][columna] >= 1 && arreglo[fila][columna] <= 8) {
+          evento.target.textContent = arreglo[fila][columna]
+          evento.target.classList.add('verde')
+          evento.target.classList.remove('gris')
+        } else {
+          if (arreglo[fila][columna] === 0) {
+            recorrer(arreglo, fila, columna)
+            console.table(arreglo)
+          }
+        }
+      }
+      verificarGanado()
+    }
+
+    function verificarGanado() {
+      const celdas = document.querySelectorAll(".contenedor span")
+      let cant = 0
+      celdas.forEach(celda => {
+        if (celda.classList.contains('verde')) {
+          cant++
+        }
+      })
+      if (cant == 90) {
+        estado = false
+        setTimeout(() => alert('Ganaste'), 10)
+      }
+    }
+
+    function recorrer(arreglo, fil, col) {
+      if (fil >= 0 && fil < 10 && col >= 0 && col < 10) {
+        if (arreglo[fil][col] == 0) {
+          arreglo[fil][col] = "x"
+          document.querySelector(`#celda${fil}${col}`).classList.add('verde')
+          document.querySelector(`#celda${fil}${col}`).classList.remove('gris')
+          recorrer(arreglo, fil, col + 1)
+          recorrer(arreglo, fil, col - 1)
+          recorrer(arreglo, fil + 1, col)
+          recorrer(arreglo, fil - 1, col)
+          recorrer(arreglo, fil - 1, col - 1)
+          recorrer(arreglo, fil - 1, col + 1)
+          recorrer(arreglo, fil + 1, col + 1)
+          recorrer(arreglo, fil + 1, col - 1)
+        } else {
+          if (arreglo[fil][col] >= 1 && arreglo[fil][col] <= 8) {
+            document.querySelector(`#celda${fil}${col}`).classList.add('verde')
+            document.querySelector(`#celda${fil}${col}`).classList.remove('gris')
+            document.querySelector(`#celda${fil}${col}`).textContent = arreglo[fil][col]
+          }
+        }
+      }
+    }
+
+    document.querySelector(".contenedor").addEventListener('click', evento => {
+      if (evento.target.tagName == 'SPAN' && estado) {
+        const fila = parseInt(evento.target.dataset.fila)
+        const columna = parseInt(evento.target.dataset.columna)
+        if (document.querySelector(`#celda${fila}${columna}`).classList.contains('gris')) {
+          destapar(arreglo, fila, columna, evento)
+        }
+      }
+    })
+
+    crearPantalla()
+
+    let estado = true  // Juego activo o terminado
+    const arreglo = crearTablero()
+    disponerBombas(arreglo)
+    generarBombasProximas(arreglo)
+    console.table(arreglo)
+*/
