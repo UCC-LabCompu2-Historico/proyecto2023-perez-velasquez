@@ -73,9 +73,6 @@ document.addEventListener("DOMContentLoaded", function() {
     campo = [];
     for (let f = 0; f < filas; f++) {
       campo.push([])
-      for (let c = 0; c < columnas; c++) {
-        campo[f].push(0)
-      }
     }
   }
 
@@ -88,15 +85,15 @@ document.addEventListener("DOMContentLoaded", function() {
    */
   let ponerBombas = (filas,columnas) => {
     let minas = columnas * filas * 0.1;
-    let contador = 0;
-    do{
-      let fil = Math.floor(Math.random() * filas);
-      let col = Math.floor(Math.random() * columnas);
-      if(campo[fil][col]===0){
-        campo[fil][col]=-1;
-        contador++;
-      }
-    }while(contador<minas)
+    for(let i = 0; i < minas;i++){
+      let c;
+      let f;
+      do{
+        c = Math.floor(Math.random() * columnas);
+        f = Math.floor(Math.random() * filas);
+      }while(tablero[f][c])
+      tablero[f][c] = {valor: -1}
+    }
   }
   /**
    * Permite contabilizar las cantidad de bombas en el perimetro
