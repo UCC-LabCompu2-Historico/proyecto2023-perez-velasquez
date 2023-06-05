@@ -2,7 +2,6 @@ document.addEventListener("DOMContentLoaded", function() {
   const tablero = document.getElementById("tablero");
   const selectDificultad = document.getElementById("gamemode");
   let campo = [];
-
   /**
    * Crea el tablero de juego, con celdas segun la dificultad
    * elegida, pero en el HTML, es el tablero visible
@@ -28,21 +27,39 @@ document.addEventListener("DOMContentLoaded", function() {
   }
 
   /**
+   * Permite poder crear el tablero en caso de ser necesario,
+   * Pero es el tablero del javascript
+   * @method crearCampo
+   * @param {int} columnas
+   * @param {int} filas
+   */
+  let crearCampo = (columnas,filas) =>{
+    vaciarCampo(columnas);
+    ponerBombas(columnas,filas);
+    contarBombas(campo,columnas,filas);
+  }
+
+  /**
+   * Permite mantener actualizado el campo (tablero del js)
+   * Con los cambios del usuario
+   * @method mostrarCampo
+   * @param {int} columnas
+   * @param {int} filas
+   */
+  let mostrarCampo = (columnas,filas) =>{
+
+  }
+
+  /**
    * Permite poder vaciar el tablero en caso de ser necesario y
    * Permite crear el campo nulo, que luego sera completado
-   * @method vaciarTableroJava
-   * @param {int} filas
+   * @method vaciarCampo
    * @param {int} columnas
    */
-  let vaciarCampo = (filas,columnas) => {
+  let vaciarCampo = (columnas) => {
     campo = [];
-    for(let i = 0;i<filas;i++){
-      campo.push([columnas]);
-    }
-    for(let c = 0;c < columnas;c++){
-      for(let f = 0;f < filas;f++){
-        campo[c][f] = {valor: 0};
-      }
+    for(let c = 0;c < columnas ;c++){
+      campo.push([]);
     }
   }
 
@@ -61,13 +78,27 @@ document.addEventListener("DOMContentLoaded", function() {
       do {
         fil = Math.floor(Math.random() * filas);
         col = Math.floor(Math.random() * columnas);
-      } while (campo[col][fil] !== -1)
-      campo[fil][col] = {valor: -1}
+      } while (campo[col][fil] )
+      campo[col][fil] = {valor: -1}
     }
   }
 
-  let contarBombas = (columnas,filas) => {
-
+  /**
+   * Permite contabilizar las cantidad de bombas en el perimetro
+   * De cada una de las casillas
+   * @method contarBombas
+   * @param {int} columnas
+   * @param {int} filas
+   * @param {int[][]} arreglo
+   */
+  let contarBombas = (arreglo,columnas,filas) => {
+    for (let c = 0;c < columnas;c++){
+      for(let f = 0;f < filas;f++){
+        if(!campo[c][f]){
+          campo[c][f] = {valor: 0};
+        }
+      }
+    }
   }
 
   /**
@@ -89,5 +120,4 @@ document.addEventListener("DOMContentLoaded", function() {
 
   //Tablero inicial
   crearTablero(10, 5);
-
 });
