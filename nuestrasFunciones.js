@@ -19,6 +19,7 @@ document.addEventListener("DOMContentLoaded", function() {
       for (let columna = 0; columna < columnas; columna++) {
         const casilla = document.createElement("div");
         casilla.classList.add("casilla");
+        casilla.id = `celda-${columna}-${fila}`;
         casilla.style.width = `${anchoCasilla}px`;
         casilla.style.height = `${altoCasilla}px`;
         tablero.appendChild(casilla);
@@ -33,10 +34,10 @@ document.addEventListener("DOMContentLoaded", function() {
    * @param {int} columnas
    * @param {int} filas
    */
-  let crearCampo = (columnas,filas) =>{
-    vaciarCampo(columnas);
-    ponerBombas(columnas,filas);
-    contarBombas(campo,columnas,filas);
+  let crearCampo = (filas,columnas) =>{
+    vaciarCampo(filas,columnas);
+    ponerBombas(filas,columnas);
+    console.log(campo);
   }
 
   /**
@@ -55,11 +56,15 @@ document.addEventListener("DOMContentLoaded", function() {
    * Permite crear el campo nulo, que luego sera completado
    * @method vaciarCampo
    * @param {int} columnas
+   * @param {int} filas
    */
-  let vaciarCampo = (columnas) => {
+  let vaciarCampo = (filas,columnas) => {
     campo = [];
-    for(let c = 0;c < columnas ;c++){
-      campo.push([]);
+    for (let f = 0; f < filas; f++) {
+      campo.push([])
+      for (let c = 0; c < columnas; c++) {
+        campo[f].push(0)
+      }
     }
   }
 
@@ -70,17 +75,17 @@ document.addEventListener("DOMContentLoaded", function() {
    * @param {int} columnas
    * @param {int} filas
    */
-  let ponerBombas = (columnas,filas) => {
-    let minas = columnas * filas * 0.1;
-    for (let contador = 0; contador < minas; contador++) {
-      let fil;
-      let col;
-      do {
-        fil = Math.floor(Math.random() * filas);
-        col = Math.floor(Math.random() * columnas);
-      } while (campo[col][fil] )
-      campo[col][fil] = {valor: -1}
-    }
+  let ponerBombas = (filas,columnas) => {
+    let minas = columnas * filas * 0.2;
+    let contador = 0;
+    do{
+      let fil = Math.floor(Math.random() * filas);
+      let col = Math.floor(Math.random() * columnas);
+      if(campo[fil][col]===0){
+        campo[fil][col]=-1;
+        contador++;
+      }
+    }while(contador<minas)
   }
 
   /**
@@ -94,8 +99,8 @@ document.addEventListener("DOMContentLoaded", function() {
   let contarBombas = (arreglo,columnas,filas) => {
     for (let c = 0;c < columnas;c++){
       for(let f = 0;f < filas;f++){
-        if(!campo[c][f]){
-          campo[c][f] = {valor: 0};
+        if(!campo[f][c]){
+          campo[f][c] = 0;
         }
       }
     }
@@ -111,13 +116,63 @@ document.addEventListener("DOMContentLoaded", function() {
 
     if (dificultadSeleccionada === "facil") {
       crearTablero(10, 5);
+      crearCampo(10,5);
     } else if (dificultadSeleccionada === "intermedio") {
       crearTablero(20, 10);
+      crearCampo(20,10);
     } else if (dificultadSeleccionada === "dificil") {
       crearTablero(40, 20);
+      crearCampo(40,20);
     }
   });
 
   //Tablero inicial
   crearTablero(10, 5);
+  crearCampo(10,5);
 });
+/*
+  function contarLado(arreglo, fila, columna) {
+    let total = 0
+    if (fila - 1 >= 0 && columna - 1 >= 0) {
+      if (arreglo[fila - 1][columna - 1] == "b") {
+        total = total + 1
+      }
+    }
+    if (fila - 1 >= 0) {
+      if (arreglo[fila - 1][columna] == "b") {
+        total = total + 1
+      }
+    }
+    if (fila - 1 >= 0 && columna + 1 < 10) {
+      if (arreglo[fila - 1][columna + 1] == "b") {
+        total = total + 1
+      }
+    }
+    if (columna + 1 < 10) {
+      if (arreglo[fila][columna + 1] == "b") {
+        total = total + 1
+      }
+    }
+    if (fila + 1 < 10 && columna + 1 < 10) {
+      if (arreglo[fila + 1][columna + 1] == "b") {
+        total = total + 1
+      }
+    }
+    if (fila + 1 < 10) {
+      if (arreglo[fila + 1][columna] == "b") {
+        total = total + 1
+      }
+    }
+    if (fila + 1 < 10 && columna - 1 >= 0) {
+      if (arreglo[fila + 1][columna - 1] == "b") {
+        total = total + 1
+      }
+    }
+    if (columna - 1 >= 0) {
+      if (arreglo[fila][columna - 1] == "b") {
+        total = total + 1
+      }
+    }
+    return total
+  }
+*/
