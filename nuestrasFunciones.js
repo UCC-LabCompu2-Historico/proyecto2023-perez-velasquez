@@ -37,6 +37,7 @@ document.addEventListener("DOMContentLoaded", function() {
   let crearCampo = (filas,columnas) =>{
     vaciarCampo(filas,columnas);
     ponerBombas(filas,columnas);
+    contarBombas(campo,filas,columnas)
     console.log(campo);
   }
 
@@ -87,6 +88,28 @@ document.addEventListener("DOMContentLoaded", function() {
       }
     }while(contador<minas)
   }
+  /**
+   * Permite contabilizar las cantidad de bombas en el perimetro
+   * De una de las casillas
+   * @method contarBombas
+   * @param {int[][]} campo
+   * @param {int} filas
+   * @param {int} columnas
+   * @param {int} fila
+   * @param {int} columna
+   */
+  let contar = (campo, filas, columnas, fila, columna) => {
+    let resultado = 0;
+    for (let x = fila - 1; x <= fila + 1; x++) {
+      for (let y = columna - 1; y <= columna + 1; y++) {
+        if (x >= 0 && y >= 0 && x < filas && y < columnas && campo[x][y] === -1) {
+          resultado = resultado + 1;
+        }
+      }
+    }
+    return resultado;
+  }
+
 
   /**
    * Permite contabilizar las cantidad de bombas en el perimetro
@@ -94,13 +117,13 @@ document.addEventListener("DOMContentLoaded", function() {
    * @method contarBombas
    * @param {int} columnas
    * @param {int} filas
-   * @param {int[][]} arreglo
+   * @param {int[][]} campo
    */
-  let contarBombas = (arreglo,columnas,filas) => {
-    for (let c = 0;c < columnas;c++){
-      for(let f = 0;f < filas;f++){
-        if(!campo[f][c]){
-          campo[f][c] = 0;
+  let contarBombas = (campo,filas,columnas) => {
+    for (let f = 0;f < filas;f++){
+      for(let c = 0;c < columnas;c++){
+        if(campo[f][c]===0){
+          campo[f][c] = contar(campo,filas,columnas,f,c);
         }
       }
     }
