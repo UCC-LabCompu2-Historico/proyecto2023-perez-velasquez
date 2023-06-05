@@ -15,7 +15,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Aclonica&family=Poppins:wght@500&display=swap"
           rel="stylesheet">
-    
+
     <!--Favicon-->
     <link rel="shortcut icon" href="Imagenes/favicon.ico" type="image/x-icon">
 
@@ -49,7 +49,7 @@
             <option value="intermedio">medio</option>
             <option value="dificil">dificil</option>
         </select>
-        <p>Ingrese su nombre:</p>
+        <label for="nameInput">Ingrese su nombre:</label>
         <input type="text" id="nameInput" placeholder="Agus">
     </div>
 
@@ -65,8 +65,8 @@
         </div>
         <div class="info" id="temp"> 00:00</div>
         <div class="grid-item">
-            <label for="restart">
-                <button onclick="location.reload()">
+            <label for="reinicio">
+                <button id="reinicio" onclick="location.reload()">
                     <img class="parainfo" id="restart" src="Imagenes/reiniciar.png" alt="Imagen de un reinicio">
                 </button>
             </label>
@@ -83,10 +83,10 @@
 
 <!--tablero-->
 <div id="tablero">
-    
+
 </div>
 <!--<canvas class="game" id="tablero">
-        
+
     </canvas>-->
 </body>
 </html>
