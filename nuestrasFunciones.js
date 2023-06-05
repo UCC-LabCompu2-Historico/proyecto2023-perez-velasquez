@@ -49,7 +49,7 @@ document.addEventListener("DOMContentLoaded", function() {
    * @param {int} columnas
    * @param {int} filas
    */
-  let mostrarCampo = (columnas,filas) =>{
+  let mostrarCampo = (filas,columnas) =>{
     for (let f = 0; f < filas; f++) {
       for (let c = 0; c < columnas; c++) {
         if (campo[f][c] === -1) {
