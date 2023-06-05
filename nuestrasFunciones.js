@@ -40,6 +40,7 @@ document.addEventListener("DOMContentLoaded", function() {
     contarBombas(filas,columnas);
     mostrarCampo(filas,columnas);
     console.log(campo);
+    console.log(tablero);
   }
 
   /**
@@ -53,9 +54,9 @@ document.addEventListener("DOMContentLoaded", function() {
     for (let f = 0; f < filas; f++) {
       for (let c = 0; c < columnas; c++) {
         if (campo[f][c] === -1) {
-          let casilla = document.getElementById(`casilla-${c}-${f}`)
-          casilla.innerHTML = `<i class="fas fa-bomb">B</i>`
-          casilla.style.color = "black"
+          let casilla = document.getElementById(`casilla-${f}-${c}`)
+          casilla.innerHTML = '<span class="bomb-letter">B</span>';
+          casilla.style.color = "black";
         }
       }
     }
@@ -99,7 +100,7 @@ document.addEventListener("DOMContentLoaded", function() {
   }
   /**
    * Permite contabilizar las cantidad de bombas en el perimetro
-   * De una de las casillas
+   * De una de las casillas en la posición (fila,columna)
    * @method contarBombas
    * @param {int} filas
    * @param {int} columnas
@@ -111,7 +112,7 @@ document.addEventListener("DOMContentLoaded", function() {
     for (let x = fila - 1; x <= fila + 1; x++) {
       for (let y = columna - 1; y <= columna + 1; y++) {
         if (x >= 0 && y >= 0 && x < filas && y < columnas && campo[x][y] === -1) {
-          resultado = resultado + 1;
+          resultado++;
         }
       }
     }
@@ -156,6 +157,34 @@ document.addEventListener("DOMContentLoaded", function() {
     }
   });
 
+
+  /**
+   // Obtén una referencia al elemento Canvas y su contexto
+   var canvas = document.getElementById("canvas");
+   var ctx = canvas.getContext("2d");
+
+   // Configura el color inicial del Canvas
+   var canvasColor = "#FFFFFF";
+
+   // Detecta el clic en una casilla
+   canvas.addEventListener("click", function(event) {
+    var rect = canvas.getBoundingClientRect();
+    var mouseX = event.clientX - rect.left;
+    var mouseY = event.clientY - rect.top;
+
+    // Comprueba si la casilla con coordenadas (mouseX, mouseY) es una bomba
+    var esBomba = comprobarSiEsBomba(mouseX, mouseY);
+
+    // Cambia el color del Canvas si la casilla es una bomba
+    if (esBomba) {
+        canvasColor = "#FF0000"; // Cambia el color a rojo
+    }
+
+    // Dibuja en el Canvas
+    dibujarCanvas();
+});
+
+   */
   //Tablero inicial
   crearTablero(10, 5);
   crearCampo(10,5);
