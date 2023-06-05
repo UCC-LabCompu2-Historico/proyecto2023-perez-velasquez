@@ -19,7 +19,7 @@ document.addEventListener("DOMContentLoaded", function() {
       for (let columna = 0; columna < columnas; columna++) {
         const casilla = document.createElement("div");
         casilla.classList.add("casilla");
-        casilla.id = `celda-${columna}-${fila}`;
+        casilla.id = `casilla-${columna}-${fila}`;
         casilla.style.width = `${anchoCasilla}px`;
         casilla.style.height = `${altoCasilla}px`;
         tablero.appendChild(casilla);
@@ -37,7 +37,8 @@ document.addEventListener("DOMContentLoaded", function() {
   let crearCampo = (filas,columnas) =>{
     vaciarCampo(filas,columnas);
     ponerBombas(filas,columnas);
-    contarBombas(campo,filas,columnas)
+    contarBombas(filas,columnas);
+    mostrarCampo(filas,columnas);
     console.log(campo);
   }
 
@@ -49,7 +50,15 @@ document.addEventListener("DOMContentLoaded", function() {
    * @param {int} filas
    */
   let mostrarCampo = (columnas,filas) =>{
-
+    for (let f = 0; f < filas; f++) {
+      for (let c = 0; c < columnas; c++) {
+        if (campo[f][c] === -1) {
+          let casilla = document.getElementById(`casilla-${c}-${f}`)
+          casilla.innerHTML = `<i class="fas fa-bomb">B</i>`
+          casilla.style.color = "black"
+        }
+      }
+    }
   }
 
   /**
@@ -77,7 +86,7 @@ document.addEventListener("DOMContentLoaded", function() {
    * @param {int} filas
    */
   let ponerBombas = (filas,columnas) => {
-    let minas = columnas * filas * 0.2;
+    let minas = columnas * filas * 0.1;
     let contador = 0;
     do{
       let fil = Math.floor(Math.random() * filas);
@@ -92,13 +101,12 @@ document.addEventListener("DOMContentLoaded", function() {
    * Permite contabilizar las cantidad de bombas en el perimetro
    * De una de las casillas
    * @method contarBombas
-   * @param {int[][]} campo
    * @param {int} filas
    * @param {int} columnas
    * @param {int} fila
    * @param {int} columna
    */
-  let contar = (campo, filas, columnas, fila, columna) => {
+  let contar = (filas, columnas, fila, columna) => {
     let resultado = 0;
     for (let x = fila - 1; x <= fila + 1; x++) {
       for (let y = columna - 1; y <= columna + 1; y++) {
@@ -117,13 +125,12 @@ document.addEventListener("DOMContentLoaded", function() {
    * @method contarBombas
    * @param {int} columnas
    * @param {int} filas
-   * @param {int[][]} campo
    */
-  let contarBombas = (campo,filas,columnas) => {
+  let contarBombas = (filas,columnas) => {
     for (let f = 0;f < filas;f++){
       for(let c = 0;c < columnas;c++){
         if(campo[f][c]===0){
-          campo[f][c] = contar(campo,filas,columnas,f,c);
+          campo[f][c] = contar(filas,columnas,f,c);
         }
       }
     }
@@ -153,49 +160,3 @@ document.addEventListener("DOMContentLoaded", function() {
   crearTablero(10, 5);
   crearCampo(10,5);
 });
-/*
-  function contarLado(arreglo, fila, columna) {
-    let total = 0
-    if (fila - 1 >= 0 && columna - 1 >= 0) {
-      if (arreglo[fila - 1][columna - 1] == "b") {
-        total = total + 1
-      }
-    }
-    if (fila - 1 >= 0) {
-      if (arreglo[fila - 1][columna] == "b") {
-        total = total + 1
-      }
-    }
-    if (fila - 1 >= 0 && columna + 1 < 10) {
-      if (arreglo[fila - 1][columna + 1] == "b") {
-        total = total + 1
-      }
-    }
-    if (columna + 1 < 10) {
-      if (arreglo[fila][columna + 1] == "b") {
-        total = total + 1
-      }
-    }
-    if (fila + 1 < 10 && columna + 1 < 10) {
-      if (arreglo[fila + 1][columna + 1] == "b") {
-        total = total + 1
-      }
-    }
-    if (fila + 1 < 10) {
-      if (arreglo[fila + 1][columna] == "b") {
-        total = total + 1
-      }
-    }
-    if (fila + 1 < 10 && columna - 1 >= 0) {
-      if (arreglo[fila + 1][columna - 1] == "b") {
-        total = total + 1
-      }
-    }
-    if (columna - 1 >= 0) {
-      if (arreglo[fila][columna - 1] == "b") {
-        total = total + 1
-      }
-    }
-    return total
-  }
-*/
