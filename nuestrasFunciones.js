@@ -28,14 +28,21 @@ document.addEventListener("DOMContentLoaded", function() {
   }
 
   /**
-   * Permite poder vaciar el tablero en caso de ser necesario
+   * Permite poder vaciar el tablero en caso de ser necesario y
+   * Permite crear el campo nulo, que luego sera completado
    * @method vaciarTableroJava
    * @param {int} filas
+   * @param {int} columnas
    */
-  let vaciarTableroJava = (filas) => {
+  let vaciarCampo = (filas,columnas) => {
     campo = [];
     for(let i = 0;i<filas;i++){
-      campo.push([]);
+      campo.push([columnas]);
+    }
+    for(let c = 0;c < columnas;c++){
+      for(let f = 0;f < filas;f++){
+        campo[c][f] = {valor: 0};
+      }
     }
   }
 
@@ -54,9 +61,13 @@ document.addEventListener("DOMContentLoaded", function() {
       do {
         fil = Math.floor(Math.random() * filas);
         col = Math.floor(Math.random() * columnas);
-      } while (campo[fil][col])
+      } while (campo[col][fil] !== -1)
       campo[fil][col] = {valor: -1}
     }
+  }
+
+  let contarBombas = (columnas,filas) => {
+
   }
 
   /**
