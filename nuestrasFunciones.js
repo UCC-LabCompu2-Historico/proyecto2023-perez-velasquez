@@ -17,10 +17,9 @@ document.addEventListener("DOMContentLoaded", function() {
 
     const anchoCasilla = 800 / columnas;
     const altoCasilla = 400 / filas;
-
     for (let fila = 0; fila < filas; fila++) {
       for (let columna = 0; columna < columnas; columna++) {
-        const casilla = document.createElement("div");
+        let casilla = document.createElement("div");
         casilla.classList.add("casilla");
         casilla.id = `casilla-${columna}-${fila}`;
         casilla.style.width = `${anchoCasilla}px`;
@@ -73,6 +72,7 @@ document.addEventListener("DOMContentLoaded", function() {
      * @param {element} casilla
      * @param {function} me
      */
+
   let simpleclick = (casilla,fila,columna,me) => {
       if(!enJuego){
           return;
@@ -289,90 +289,3 @@ canvas.addEventListener("click", function(event) {
   crearTablero(10, 5);
   crearCampo(10,5);
 });
-/*
- function crearPantalla() {
-      let cad = ''
-      for (let f = 0; f < 10; f++) {
-        for (c = 0; c < 10; c++) {
-          cad += `<span class="celda gris" id="celda${f}${c}" data-fila="${f}" data-columna="${c}"></span>`
-        }
-      }
-      document.querySelector(".contenedor").innerHTML = cad
-    }
-
-    function destapar(arreglo, fila, columna, evento) {
-      if (arreglo[fila][columna] === 'b') {
-        evento.target.style.backgroundColor = 'red'
-        setTimeout(() => alert('Perdiste'), 10);
-        estado = false
-      } else {
-        if (arreglo[fila][columna] >= 1 && arreglo[fila][columna] <= 8) {
-          evento.target.textContent = arreglo[fila][columna]
-          evento.target.classList.add('verde')
-          evento.target.classList.remove('gris')
-        } else {
-          if (arreglo[fila][columna] === 0) {
-            recorrer(arreglo, fila, columna)
-            console.table(arreglo)
-          }
-        }
-      }
-      verificarGanado()
-    }
-
-    function verificarGanado() {
-      const celdas = document.querySelectorAll(".contenedor span")
-      let cant = 0
-      celdas.forEach(celda => {
-        if (celda.classList.contains('verde')) {
-          cant++
-        }
-      })
-      if (cant == 90) {
-        estado = false
-        setTimeout(() => alert('Ganaste'), 10)
-      }
-    }
-
-    function recorrer(arreglo, fil, col) {
-      if (fil >= 0 && fil < 10 && col >= 0 && col < 10) {
-        if (arreglo[fil][col] == 0) {
-          arreglo[fil][col] = "x"
-          document.querySelector(`#celda${fil}${col}`).classList.add('verde')
-          document.querySelector(`#celda${fil}${col}`).classList.remove('gris')
-          recorrer(arreglo, fil, col + 1)
-          recorrer(arreglo, fil, col - 1)
-          recorrer(arreglo, fil + 1, col)
-          recorrer(arreglo, fil - 1, col)
-          recorrer(arreglo, fil - 1, col - 1)
-          recorrer(arreglo, fil - 1, col + 1)
-          recorrer(arreglo, fil + 1, col + 1)
-          recorrer(arreglo, fil + 1, col - 1)
-        } else {
-          if (arreglo[fil][col] >= 1 && arreglo[fil][col] <= 8) {
-            document.querySelector(`#celda${fil}${col}`).classList.add('verde')
-            document.querySelector(`#celda${fil}${col}`).classList.remove('gris')
-            document.querySelector(`#celda${fil}${col}`).textContent = arreglo[fil][col]
-          }
-        }
-      }
-    }
-
-    document.querySelector(".contenedor").addEventListener('click', evento => {
-      if (evento.target.tagName == 'SPAN' && estado) {
-        const fila = parseInt(evento.target.dataset.fila)
-        const columna = parseInt(evento.target.dataset.columna)
-        if (document.querySelector(`#celda${fila}${columna}`).classList.contains('gris')) {
-          destapar(arreglo, fila, columna, evento)
-        }
-      }
-    })
-
-    crearPantalla()
-
-    let estado = true  // Juego activo o terminado
-    const arreglo = crearTablero()
-    disponerBombas(arreglo)
-    generarBombasProximas(arreglo)
-    console.table(arreglo)
-*/
