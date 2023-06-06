@@ -54,6 +54,7 @@ document.addEventListener("DOMContentLoaded", function() {
    * @param {int} filas
    */
   let eventosCampo = (filas,columnas) =>{
+<<<<<<< HEAD
     for (let f = 0; f < filas; f++) {
       for (let c = 0; c < columnas; c++) {
         let casilla = document.getElementById(`casilla-${c}-${f}`)
@@ -103,6 +104,57 @@ document.addEventListener("DOMContentLoaded", function() {
         }
         break;
     }
+=======
+      for (let f = 0; f < filas; f++) {
+          for (let c = 0; c < columnas; c++) {
+              let casilla = document.getElementById(`casilla-${c}-${f}`)
+              casilla.addEventListener("mouseup",me=>{
+                  simpleclick(casilla,f,c,me)
+              })
+          }
+      }
+  }
+
+    /**
+     * Permite ingresar los eventos del Mouse que interactuan con
+     * el campo, que es el tablero del Javascript
+     * @method eventosCampo
+     * @param {int} columna
+     * @param {int} fila
+     * @param {element} casilla
+     * @param {function} me
+     */
+  let simpleclick = (casilla,fila,columna,me) => {
+      if(!enJuego){
+          return;
+      }
+      if(casilla.value === "descubierto"){
+          return;
+      }
+      switch (me.button){
+          case 0://el 0 nos indica que es el click izquierdo
+              if(casilla.value === "marcado"){
+                  break;
+              }
+              while(juegoiniciado && campo[fila][columna] !== 0){
+                    crearCampo(filas,columnas);
+              }
+              casilla.value = "descubierto";
+              juegoiniciado = true;
+              break;
+          case 1:
+              break;
+          case 2:
+              if(casilla.value === "marcado"){
+                  casilla.value = "cubierto";
+                  banderas--;
+              }else{
+                  casilla.value = "marcado"
+                  banderas++;
+              }
+              break;
+      }
+>>>>>>> main
   }
 
   /**
@@ -156,11 +208,15 @@ document.addEventListener("DOMContentLoaded", function() {
 
   //
   tablero.addEventListener("click", function() {
+=======
+tablero.addEventListener("click", function() {
+>>>>>>> main
     // Obtener todos los inputs
     let inputs = document.getElementsByTagName("input");
 
     // Recorrer los inputs y desactivarlos
     for (let i = 0; i < inputs.length; i++) {
+<<<<<<< HEAD
       inputs[i].disabled = true;
     }
     // Iniciar el cronómetro
@@ -178,6 +234,25 @@ document.addEventListener("DOMContentLoaded", function() {
     let cronometro = document.getElementById("cronometro");
     cronometro.innerHTML = tiempoTranscurrido + " seg";
   }
+=======
+        inputs[i].disabled = true;
+    }
+     // Iniciar el cronómetro
+     startTime = new Date();
+
+     // Actualizar el cronómetro cada segundo
+     setInterval(actualizarCronometro, 1000);
+ });
+ 
+ function actualizarCronometro() {
+     let currentTime = new Date();
+     let tiempoTranscurrido = Math.floor((currentTime - startTime) / 1000);
+ 
+     // Mostrar el tiempo transcurrido en el cronómetro
+     let cronometro = document.getElementById("cronometro");
+     cronometro.innerHTML = tiempoTranscurrido + " seg";
+ }
+>>>>>>> main
 
   /**
    * Coloca las bombas, en diferentes partes del tablero
@@ -260,6 +335,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
   /**
    // Obtén una referencia al elemento Canvas y su contexto
+<<<<<<< HEAD
    var canvas = document.getElementById("canvas");
    var ctx = canvas.getContext("2d");
 
@@ -268,6 +344,16 @@ document.addEventListener("DOMContentLoaded", function() {
 
    // Detecta el clic en una casilla
    canvas.addEventListener("click", function(event) {
+=======
+var canvas = document.getElementById("canvas");
+var ctx = canvas.getContext("2d");
+
+// Configura el color inicial del Canvas
+var canvasColor = "#FFFFFF";
+
+// Detecta el clic en una casilla
+canvas.addEventListener("click", function(event) {
+>>>>>>> main
     var rect = canvas.getBoundingClientRect();
     var mouseX = event.clientX - rect.left;
     var mouseY = event.clientY - rect.top;
