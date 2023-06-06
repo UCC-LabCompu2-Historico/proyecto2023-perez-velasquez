@@ -44,7 +44,7 @@
     <!--input-->
     <div id="input">
         <label for="gamemode">Modo de juego</label>
-        <select class="gamemode" id="gamemode">
+        <select type="select" class="gamemode" id="gamemode">
             <option value="facil">facil</option>
             <option value="intermedio">medio</option>
             <option value="dificil">dificil</option>
@@ -63,7 +63,9 @@
         <div class="grid-item">
             <img class="parainfo" id="timer" src="Imagenes/alarma-activada.png" alt="Imagen de un reloj">
         </div>
-        <div class="info" id="temp"> 00:00</div>
+        <div class="info">
+            <span id="cronometro"></span>
+        </div>
         <div class="grid-item">
             <label for="reinicio">
                 <button id="reinicio" onclick="location.reload()">

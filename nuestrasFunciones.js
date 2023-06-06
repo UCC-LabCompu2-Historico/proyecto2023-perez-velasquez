@@ -2,6 +2,9 @@ document.addEventListener("DOMContentLoaded", function() {
   const tablero = document.getElementById("tablero");
   const selectDificultad = document.getElementById("gamemode");
   let campo = [];
+  let enJuego = true
+  let juegoiniciado = false;
+  let banderas = 0;
   /**
    * Crea el tablero de juego, con celdas segun la dificultad
    * elegida, pero en el HTML, es el tablero visible
@@ -44,6 +47,65 @@ document.addEventListener("DOMContentLoaded", function() {
   }
 
   /**
+   * Permite ingresar los eventos sobre el campo (tablero del js)
+   * Con los cambios del usuario
+   * @method eventosCampo
+   * @param {int} columnas
+   * @param {int} filas
+   */
+  let eventosCampo = (filas,columnas) =>{
+      for (let f = 0; f < filas; f++) {
+          for (let c = 0; c < columnas; c++) {
+              let casilla = document.getElementById(`casilla-${c}-${f}`)
+              casilla.addEventListener("mouseup",me=>{
+                  simpleclick(casilla,f,c,me)
+              })
+          }
+      }
+  }
+
+    /**
+     * Permite ingresar los eventos del Mouse que interactuan con
+     * el campo, que es el tablero del Javascript
+     * @method eventosCampo
+     * @param {int} columna
+     * @param {int} fila
+     * @param {element} casilla
+     * @param {function} me
+     */
+  let simpleclick = (casilla,fila,columna,me) => {
+      if(!enJuego){
+          return;
+      }
+      if(casilla.value === "descubierto"){
+          return;
+      }
+      switch (me.button){
+          case 0://el 0 nos indica que es el click izquierdo
+              if(casilla.value === "marcado"){
+                  break;
+              }
+              while(juegoiniciado && campo[fila][columna] !== 0){
+                    crearCampo(filas,columnas);
+              }
+              casilla.value = "descubierto";
+              juegoiniciado = true;
+              break;
+          case 1:
+              break;
+          case 2:
+              if(casilla.value === "marcado"){
+                  casilla.value = "cubierto";
+                  banderas--;
+              }else{
+                  casilla.value = "marcado"
+                  banderas++;
+              }
+              break;
+      }
+  }
+
+  /**
    * Permite mantener actualizado el campo (tablero del js)
    * Con los cambios del usuario
    * @method mostrarCampo
@@ -58,14 +120,17 @@ document.addEventListener("DOMContentLoaded", function() {
           case -1:
             casilla = document.getElementById(`casilla-${f}-${c}`)
             casilla.innerHTML = '<span class="bomb-letter">B</span>';
+            casilla.value = "cubierto";
             break;
           case 0:
             casilla = document.getElementById(`casilla-${f}-${c}`)
-            casilla.innerHTML = '<span class="vacia">X</span>';
+            casilla.innerHTML = '<span class="vacia"></span>';
+            casilla.value = "cubierto";
             break;
           default:
             casilla = document.getElementById(`casilla-${f}-${c}`)
             casilla.innerHTML = `<span class="contorno">${campo[f][c]}</span>`;
+            casilla.value = "cubierto";
             break;
         }
       }
@@ -88,6 +153,31 @@ document.addEventListener("DOMContentLoaded", function() {
       }
     }
   }
+
+  //
+tablero.addEventListener("click", function() {
+    // Obtener todos los inputs
+    let inputs = document.getElementsByTagName("input");
+
+    // Recorrer los inputs y desactivarlos
+    for (let i = 0; i < inputs.length; i++) {
+        inputs[i].disabled = true;
+    }
+     // Iniciar el cronómetro
+     startTime = new Date();
+
+     // Actualizar el cronómetro cada segundo
+     setInterval(actualizarCronometro, 1000);
+ });
+ 
+ function actualizarCronometro() {
+     let currentTime = new Date();
+     let tiempoTranscurrido = Math.floor((currentTime - startTime) / 1000);
+ 
+     // Mostrar el tiempo transcurrido en el cronómetro
+     let cronometro = document.getElementById("cronometro");
+     cronometro.innerHTML = tiempoTranscurrido + " seg";
+ }
 
   /**
    * Coloca las bombas, en diferentes partes del tablero

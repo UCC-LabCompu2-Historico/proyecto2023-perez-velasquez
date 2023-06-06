@@ -25,5 +25,16 @@
     height: calc(100% / 5);
     border: 1px solid #2f2d2d;
     box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     background: #d2cccc;
+    font-family: 'Aclonica', 'fantasy', sans-serif;
+  }
+  .gris{
+
+  }
+
+  .verde{
+
   }
