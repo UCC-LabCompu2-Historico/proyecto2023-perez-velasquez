@@ -56,7 +56,7 @@ document.addEventListener("DOMContentLoaded", function() {
   let eventosCampo = (filas,columnas) =>{
       for (let f = 0; f < filas; f++) {
           for (let c = 0; c < columnas; c++) {
-              let casilla = document.getElementById(`casilla-${c}-${f}`)
+              let casilla = document.getElementById(`casilla-${f}-${c}`)
               casilla.addEventListener("mouseup",me=>{
                   simpleclick(casilla,f,c,me)
               })
