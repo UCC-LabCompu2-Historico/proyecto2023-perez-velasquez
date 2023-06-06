@@ -2,6 +2,9 @@ document.addEventListener("DOMContentLoaded", function() {
   const tablero = document.getElementById("tablero");
   const selectDificultad = document.getElementById("gamemode");
   let campo = [];
+  let enJuego = true
+  let juegoiniciado = false;
+  let banderas = 0;
   /**
    * Crea el tablero de juego, con celdas segun la dificultad
    * elegida, pero en el HTML, es el tablero visible
@@ -44,6 +47,65 @@ document.addEventListener("DOMContentLoaded", function() {
   }
 
   /**
+   * Permite ingresar los eventos sobre el campo (tablero del js)
+   * Con los cambios del usuario
+   * @method eventosCampo
+   * @param {int} columnas
+   * @param {int} filas
+   */
+  let eventosCampo = (filas,columnas) =>{
+    for (let f = 0; f < filas; f++) {
+      for (let c = 0; c < columnas; c++) {
+        let casilla = document.getElementById(`casilla-${c}-${f}`)
+        casilla.addEventListener("mouseup",me=>{
+          simpleclick(casilla,f,c,me)
+        })
+      }
+    }
+  }
+
+  /**
+   * Permite ingresar los eventos del Mouse que interactuan con
+   * el campo, que es el tablero del Javascript
+   * @method eventosCampo
+   * @param {int} columna
+   * @param {int} fila
+   * @param {element} casilla
+   * @param {function} me
+   */
+  let simpleclick = (casilla,fila,columna,me) => {
+    if(!enJuego){
+      return;
+    }
+    if(casilla.value === "descubierto"){
+      return;
+    }
+    switch (me.button){
+      case 0://el 0 nos indica que es el click izquierdo
+        if(casilla.value === "marcado"){
+          break;
+        }
+        while(juegoiniciado && campo[fila][columna] !== 0){
+          crearCampo(filas,columnas);
+        }
+        casilla.value = "descubierto";
+        juegoiniciado = true;
+        break;
+      case 1:
+        break;
+      case 2:
+        if(casilla.value === "marcado"){
+          casilla.value = "cubierto";
+          banderas--;
+        }else{
+          casilla.value = "marcado"
+          banderas++;
+        }
+        break;
+    }
+  }
+
+  /**
    * Permite mantener actualizado el campo (tablero del js)
    * Con los cambios del usuario
    * @method mostrarCampo
@@ -53,10 +115,23 @@ document.addEventListener("DOMContentLoaded", function() {
   let mostrarCampo = (filas,columnas) =>{
     for (let f = 0; f < filas; f++) {
       for (let c = 0; c < columnas; c++) {
-        if (campo[f][c] === -1) {
-          let casilla = document.getElementById(`casilla-${f}-${c}`)
-          casilla.innerHTML = '<span class="bomb-letter">B</span>';
-          casilla.style.color = "black";
+        let casilla;
+        switch (campo[f][c]){
+          case -1:
+            casilla = document.getElementById(`casilla-${f}-${c}`)
+            casilla.innerHTML = '<span class="bomb-letter">B</span>';
+            casilla.value = "cubierto";
+            break;
+          case 0:
+            casilla = document.getElementById(`casilla-${f}-${c}`)
+            casilla.innerHTML = '<span class="vacia"></span>';
+            casilla.value = "cubierto";
+            break;
+          default:
+            casilla = document.getElementById(`casilla-${f}-${c}`)
+            casilla.innerHTML = `<span class="contorno">${campo[f][c]}</span>`;
+            casilla.value = "cubierto";
+            break;
         }
       }
     }
@@ -73,7 +148,35 @@ document.addEventListener("DOMContentLoaded", function() {
     campo = [];
     for (let f = 0; f < filas; f++) {
       campo.push([])
+      for (let c = 0; c < columnas; c++) {
+        campo[f].push(0)
+      }
     }
+  }
+
+  //
+  tablero.addEventListener("click", function() {
+    // Obtener todos los inputs
+    let inputs = document.getElementsByTagName("input");
+
+    // Recorrer los inputs y desactivarlos
+    for (let i = 0; i < inputs.length; i++) {
+      inputs[i].disabled = true;
+    }
+    // Iniciar el cronómetro
+    startTime = new Date();
+
+    // Actualizar el cronómetro cada segundo
+    setInterval(actualizarCronometro, 1000);
+  });
+
+  function actualizarCronometro() {
+    let currentTime = new Date();
+    let tiempoTranscurrido = Math.floor((currentTime - startTime) / 1000);
+
+    // Mostrar el tiempo transcurrido en el cronómetro
+    let cronometro = document.getElementById("cronometro");
+    cronometro.innerHTML = tiempoTranscurrido + " seg";
   }
 
   /**
@@ -85,15 +188,15 @@ document.addEventListener("DOMContentLoaded", function() {
    */
   let ponerBombas = (filas,columnas) => {
     let minas = columnas * filas * 0.1;
-    for(let i = 0; i < minas;i++){
-      let c;
-      let f;
-      do{
-        c = Math.floor(Math.random() * columnas);
-        f = Math.floor(Math.random() * filas);
-      }while(tablero[f][c])
-      tablero[f][c] = {valor: -1}
-    }
+    let contador = 0;
+    do{
+      let fil = Math.floor(Math.random() * filas);
+      let col = Math.floor(Math.random() * columnas);
+      if(campo[fil][col]===0){
+        campo[fil][col]=-1;
+        contador++;
+      }
+    }while(contador<minas)
   }
   /**
    * Permite contabilizar las cantidad de bombas en el perimetro
@@ -186,3 +289,90 @@ document.addEventListener("DOMContentLoaded", function() {
   crearTablero(10, 5);
   crearCampo(10,5);
 });
+/*
+ function crearPantalla() {
+      let cad = ''
+      for (let f = 0; f < 10; f++) {
+        for (c = 0; c < 10; c++) {
+          cad += `<span class="celda gris" id="celda${f}${c}" data-fila="${f}" data-columna="${c}"></span>`
+        }
+      }
+      document.querySelector(".contenedor").innerHTML = cad
+    }
+
+    function destapar(arreglo, fila, columna, evento) {
+      if (arreglo[fila][columna] === 'b') {
+        evento.target.style.backgroundColor = 'red'
+        setTimeout(() => alert('Perdiste'), 10);
+        estado = false
+      } else {
+        if (arreglo[fila][columna] >= 1 && arreglo[fila][columna] <= 8) {
+          evento.target.textContent = arreglo[fila][columna]
+          evento.target.classList.add('verde')
+          evento.target.classList.remove('gris')
+        } else {
+          if (arreglo[fila][columna] === 0) {
+            recorrer(arreglo, fila, columna)
+            console.table(arreglo)
+          }
+        }
+      }
+      verificarGanado()
+    }
+
+    function verificarGanado() {
+      const celdas = document.querySelectorAll(".contenedor span")
+      let cant = 0
+      celdas.forEach(celda => {
+        if (celda.classList.contains('verde')) {
+          cant++
+        }
+      })
+      if (cant == 90) {
+        estado = false
+        setTimeout(() => alert('Ganaste'), 10)
+      }
+    }
+
+    function recorrer(arreglo, fil, col) {
+      if (fil >= 0 && fil < 10 && col >= 0 && col < 10) {
+        if (arreglo[fil][col] == 0) {
+          arreglo[fil][col] = "x"
+          document.querySelector(`#celda${fil}${col}`).classList.add('verde')
+          document.querySelector(`#celda${fil}${col}`).classList.remove('gris')
+          recorrer(arreglo, fil, col + 1)
+          recorrer(arreglo, fil, col - 1)
+          recorrer(arreglo, fil + 1, col)
+          recorrer(arreglo, fil - 1, col)
+          recorrer(arreglo, fil - 1, col - 1)
+          recorrer(arreglo, fil - 1, col + 1)
+          recorrer(arreglo, fil + 1, col + 1)
+          recorrer(arreglo, fil + 1, col - 1)
+        } else {
+          if (arreglo[fil][col] >= 1 && arreglo[fil][col] <= 8) {
+            document.querySelector(`#celda${fil}${col}`).classList.add('verde')
+            document.querySelector(`#celda${fil}${col}`).classList.remove('gris')
+            document.querySelector(`#celda${fil}${col}`).textContent = arreglo[fil][col]
+          }
+        }
+      }
+    }
+
+    document.querySelector(".contenedor").addEventListener('click', evento => {
+      if (evento.target.tagName == 'SPAN' && estado) {
+        const fila = parseInt(evento.target.dataset.fila)
+        const columna = parseInt(evento.target.dataset.columna)
+        if (document.querySelector(`#celda${fila}${columna}`).classList.contains('gris')) {
+          destapar(arreglo, fila, columna, evento)
+        }
+      }
+    })
+
+    crearPantalla()
+
+    let estado = true  // Juego activo o terminado
+    const arreglo = crearTablero()
+    disponerBombas(arreglo)
+    generarBombasProximas(arreglo)
+    console.table(arreglo)
+*/
