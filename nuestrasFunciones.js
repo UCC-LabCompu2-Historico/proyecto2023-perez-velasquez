@@ -13,20 +13,20 @@ document.addEventListener("DOMContentLoaded", function() {
    * @param {int} filas
    */
   let crearTablero = (columnas, filas) => {
-    tablero.innerHTML = "";
+      tablero.innerHTML = "";
 
-    const anchoCasilla = 800 / columnas;
-    const altoCasilla = 400 / filas;
-    for (let fila = 0; fila < filas; fila++) {
-      for (let columna = 0; columna < columnas; columna++) {
-        let casilla = document.createElement("div");
-        casilla.classList.add("casilla");
-        casilla.id = `casilla-${columna}-${fila}`;
-        casilla.style.width = `${anchoCasilla}px`;
-        casilla.style.height = `${altoCasilla}px`;
-        tablero.appendChild(casilla);
+      const anchoCasilla = 800 / columnas;
+      const altoCasilla = 400 / filas;
+      for (let fila = 0; fila < filas; fila++) {
+          for (let columna = 0; columna < columnas; columna++) {
+              let casilla = document.createElement("button");
+              casilla.classList.add("casilla");
+              casilla.id = `casilla-${columna}-${fila}`;
+              casilla.style.width = `${anchoCasilla}px`;
+              casilla.style.height = `${altoCasilla}px`;
+              tablero.appendChild(casilla);
+          }
       }
-    }
   }
 
   /**
@@ -38,6 +38,7 @@ document.addEventListener("DOMContentLoaded", function() {
    */
   let crearCampo = (filas,columnas) =>{
     vaciarCampo(filas,columnas);
+    eventosCampo(filas,columnas);
     ponerBombas(filas,columnas);
     contarBombas(filas,columnas);
     mostrarCampo(filas,columnas);
