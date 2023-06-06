@@ -148,9 +148,6 @@ document.addEventListener("DOMContentLoaded", function() {
         campo = [];
         for (let f = 0; f < filas; f++) {
             campo.push([])
-            for (let c = 0; c < columnas; c++) {
-                campo[f].push(0)
-            }
         }
     }
 
@@ -192,8 +189,8 @@ document.addEventListener("DOMContentLoaded", function() {
         do{
             let fil = Math.floor(Math.random() * filas);
             let col = Math.floor(Math.random() * columnas);
-            if(campo[fil][col]===0){
-                campo[fil][col]=-1;
+            if(campo[fil][col]){
+                campo[fil][col]={valor: -1};
                 contador++;
             }
         }while(contador<minas)
