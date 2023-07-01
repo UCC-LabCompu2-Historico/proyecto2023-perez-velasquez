@@ -5,11 +5,13 @@ body {
     display: flex;
 }
 
+
 h1 {
     font-family: 'Aclonica', 'fantasy', sans-serif;
     color: #001ed1;
-    font-size: 250%;
-    margin-bottom: 10%;
+    font-size: 300%;
+    margin-bottom: 20%;
+    text-align: center;
 }
 
 .bicolor {
