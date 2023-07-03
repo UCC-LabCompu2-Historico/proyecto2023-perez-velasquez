@@ -1,68 +1,24 @@
 /*ESTILOS CANVAS Y TABLERO*/
 /*
-#game {
-    margin-left: 5%;
-    margin-top: 75px;
-    width: 800px;
-    height: 400px;
-    display: flex;
-    z-index: 3;
-    background-color: #ffffff00;
-}
-
-#tablero {
-    width: 800px;
-    height: 400px;
-    display: flex;
-    flex-wrap: wrap;
-    margin-left: 5%;
-    margin-top: 75px;
-    z-index: 2;
-    border-spacing: 0;
-  }
-
-  .casilla {
-    width: calc(100% / 10);
-    height: calc(100% / 5);
-    border: 1px solid #2f2d2d;
-    box-sizing: border-box;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: #d2cccc;
-    font-family: 'Aclonica', 'fantasy', sans-serif;
-  }
-  .gris{
-
-  }
-
-  .verde{
-
-  }
-*/
 *{
-    transition: all 1s;
     box-sizing: border-box;
 }
 
-body{
-    font-family: 'Aclonica', 'fantasy', sans-serif;
-    font-weight: lighter;
-    margin: 0;
-    padding: 0;
-    user-select: none;
-}
 table{
-    background: #d2cccc;
+    transition: all 1s;
+    background: #a29898;
     margin: auto;
     border-spacing: 0;
 }
 
 td{
+    transition: all 1s;
     border: 1px solid #2f2d2d;
     width: 30px;
     height: 30px;
     box-sizing: border-box;
     text-align: center;
-    box-shadow: inset 3px 3px 0 0 #f6eeee;
+    box-shadow: inset 3px 3px 0 0 #eee9e9,inset -3px -3px 0 0 #343131;
 }
+
+ */

@@ -1,4 +1,5 @@
 /* Media query - tablets */
+/*
 @media only screen and (max-width: 1024px) {
     h1 {
         font-size: 200%;
@@ -34,7 +35,10 @@
     }
 }
 
+ */
+
 /* Media query - phones */
+/*
 @media only screen and (max-width: 600px) {
     h1 {
         font-size: 150%;
@@ -69,3 +73,5 @@
         width: 100%;
     }
 }
+
+ */

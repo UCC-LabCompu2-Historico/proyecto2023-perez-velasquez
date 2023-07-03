@@ -1,10 +1,15 @@
 /*ESTILOS DEL HEADER, FOOTER Y GENERALES*/
-
+/*
 body {
     background-color: #2d2d2d;
     display: flex;
+    font-family: 'Aclonica', 'fantasy', sans-serif;
+    font-weight: lighter;
+    margin: 0;
+    padding: 0;
+    user-select: none;
 }
-/*
+
 
 h1 {
     font-family: 'Aclonica', 'fantasy', sans-serif;
@@ -13,6 +18,7 @@ h1 {
     margin-bottom: 20%;
     text-align: center;
 }
+
 
 .bicolor {
     color: #db3b26;
