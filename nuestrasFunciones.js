@@ -1,13 +1,14 @@
-let filas = 20;
-let columnas = 20;
-let ancho = 30;
-let campo = [];
-let minas = (filas * columnas * 0.1);
-let estado = true;
-let comienzo = false;
-let banderas = minas;
-
 document.addEventListener('DOMContentLoaded', function() {
+    let filas = 15;
+    let columnas = 15;
+    let ancho = 30;
+    let campo = [];
+    let minas = Math.floor(filas * columnas * 0.1);
+    let estado = true;
+    let comienzo = false;
+    let banderas = 0;
+    const reinicio = document.getElementById("reinicio");
+    const dificultad = document.getElementById("gamemode");
 
     /**
      * Crea un nuevo juego, dependiendo si es necesario por un cambio de dificultad
@@ -15,11 +16,24 @@ document.addEventListener('DOMContentLoaded', function() {
      * @method nuevoJuego
      */
     let nuevoJuego = () => {
+        reiniciarVariables();
         crearTablero();
         eventosCampo();
         crearCampo();
         actualizarCampo();
     }
+
+    /**
+     * Es una función, que se utiliza para reiniciar las variables, principalmente, para que
+     * yo pueda reiniciar el tableero sin que haya efectos colaterales
+     * @method nuevoJuego
+     */
+    let reiniciarVariables = () => {
+        minas = Math.floor(filas * columnas * 0.1);
+        estado = true;
+        comienzo = false;
+        banderas = 0;
+    };
 
     /**
      * Crea el tablero de juego, con celdas segun la dificultad elegida, pero en el HTML,
@@ -40,6 +54,7 @@ document.addEventListener('DOMContentLoaded', function() {
         tableroHTML.innerHTML = html
         tableroHTML.style.width = columnas * ancho + "px";
         tableroHTML.style.height = filas * ancho + "px";
+        tableroHTML.style.background = "#a29898";
     }
 
     /**
@@ -176,6 +191,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         ganar();
         perder();
+        actualizarContador();
     }
 
     /**
@@ -183,29 +199,6 @@ document.addEventListener('DOMContentLoaded', function() {
      * las casillas con valor -1 estén tapadas, en caso contrario sale de la función y se activa
      * la funcion perder
      * @method ganar
-     */
-    /*
-    function verificarGanador() {
-        for (let f = 0; f < filas; f++) {
-            for (let c = 0; c < columnas; c++) {
-                if (tablero[c][f].estado != `descubierto`) { //Si la mina está cubeirta
-                    if (tablero[c][f].valor == -1) { //y es una mina
-                        //entonces vamos bien
-                        continue
-                    } else {
-                        //Si encuentra una celda cubierta, que no sea una mina, aún no se ha ganado
-                        return
-                    }
-                }
-            }
-        }
-        //Si al finalizar la comprobación, todas las celdas cubiertas son minas, entonces se ha ganado
-        let tableroHTML = document.getElementById("tablero")
-        tableroHTML.style.background = "green"
-        enJuego = false
-        sonido_ganador.play()
-        sonido_win.play()
-    }
      */
     let ganar = () => {
         for(let c = 0;c < columnas;c++) {
@@ -336,12 +329,13 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    let ActualizarContador = () => {
-        let panel = document.getElementById()
+    let actualizarContador = () => {
+        let panel = document.getElementById("contador");
+        panel.innerHTML = minas-banderas;
     }
 
-    nuevoJuego();
-/*
+
+    /*
     selectDificultad.addEventListener("change", function () {
         const dificultadSeleccionada = selectDificultad.value;
 
@@ -357,6 +351,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
     */
+    /*
     selectorDificultad = () => {
         let dificultad = document.getElementById("gamemode");
         switch (dificultad){
@@ -370,4 +365,30 @@ document.addEventListener('DOMContentLoaded', function() {
                 break;
         }
     }
+
+     */
+
+    reinicio.addEventListener("click", function (){
+        nuevoJuego();
+    });
+
+    dificultad.addEventListener("change", function (){
+        const dificultadSeleccionada = dificultad.value;
+
+        if (dificultadSeleccionada === "facil") {
+            filas = 15;
+            columnas = 15;
+            nuevoJuego();
+        } else if (dificultadSeleccionada === "intermedio") {
+            filas = 20;
+            columnas = 20;
+            nuevoJuego();
+        } else if (dificultadSeleccionada === "dificil") {
+            filas = 25;
+            columnas = 25;
+            nuevoJuego();
+        }
+    })
+
+    nuevoJuego();
 });
