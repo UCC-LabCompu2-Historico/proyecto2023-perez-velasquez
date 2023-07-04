@@ -7,13 +7,12 @@ document.addEventListener('DOMContentLoaded', function() {
     let estado = true;
     let comienzo = false;
     let banderas = 0;
+    let tiempoRef = Date.now();
+    let cronometrar = false;
+    let acumulado = 0;
     let nombreSelect = document.getElementById("nameInput");
     const reinicio = document.getElementById("reinicio");
     const dificultad = document.getElementById("gamemode");
-    /*
-    let intervaloCronometro;
-
-     */
 
     /**
      * Crea un nuevo juego, dependiendo si es necesario por un cambio de dificultad
@@ -26,10 +25,6 @@ document.addEventListener('DOMContentLoaded', function() {
         eventosCampo();
         crearCampo();
         actualizarCampo();
-        /*
-        intervaloCronometro = setInterval(cronometro, 1000);
-
-         */
     }
 
     /**
@@ -42,6 +37,8 @@ document.addEventListener('DOMContentLoaded', function() {
         comienzo = false;
         banderas = 0;
         nombreSelect.disabled = false;
+        acumulado = 0;
+        cronometrar = false;
     };
 
     /**
@@ -227,6 +224,7 @@ document.addEventListener('DOMContentLoaded', function() {
             let tableroHTML = document.getElementById("tablero");
             tableroHTML.style.background = "green";
             estado = false;
+            cronometrar = false;
             /*
             clearInterval(intervaloCronometro);
              */
@@ -245,6 +243,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     let tableroHTML = document.getElementById("tablero");
                     tableroHTML.style.background = "#db3b26";
                     estado = false;
+                    cronometrar = false;
                 }
             }
         }
@@ -301,6 +300,9 @@ document.addEventListener('DOMContentLoaded', function() {
                     nuevoJuego();
                 }
                 campo[c][f].estado = "destapado";
+                if(!comienzo){
+                    cronometrar = true;
+                }
                 comienzo = true;
                 if(campo[c][f].valor === 0){
                     areaRecursiva(c,f);
@@ -388,47 +390,37 @@ document.addEventListener('DOMContentLoaded', function() {
             nuevoJuego();
         }
     })
-/*
-    let cronometro = () => {
-        startTime = new Date();
-        setInterval(actualizarCronometro, 1000);
-    }
 
-    let actualizarCronometro = () => {
-        let currentTime = new Date();
-        let tiempoTranscurrido = Math.floor((currentTime - startTime) / 1000);
-
-        // Mostrar el tiempo transcurrido en el cronómetro
-        let cronometro = document.getElementById("cronometro");
-        cronometro.innerHTML = tiempoTranscurrido + " seg";
-    }
-
- */
-    /*
-    tablero.addEventListener("click", function() {
-        // Obtener todos los inputs
-        let inputs = document.getElementsByTagName("input");
-
-        // Recorrer los inputs y desactivarlos
-        for (let i = 0; i < inputs.length; i++) {
-            inputs[i].disabled = true;
+    /**
+     * Es una función Es una función de temporización incorporada que se utiliza para
+     * ejecutar repetidamente un bloque de código o una función con un intervalo de tiempo específico.
+     * @method setInterval
+     */
+    setInterval(() => {
+        let tiempo = document.getElementById("cronometro");
+        if (cronometrar) {
+            acumulado += Date.now() - tiempoRef;
         }
-        // Iniciar el cronómetro
-        startTime = new Date();
+        tiempoRef = Date.now();
+        tiempo.innerHTML = formatearTiempo(acumulado);
+    }, 1000 / 60);
 
-        // Actualizar el cronómetro cada segundo
-        setInterval(actualizarCronometro, 1000);
-    });
+    /**
+     * toma un valor de tiempo en milisegundos y lo convierte en una cadena de texto con el formato "HH:MM:SS.MMM",
+     * donde HH son las horas, MM  los minutos, SS  los segundos y MMM  milisegundos.
+     * @method setInterval
+     */
+    let formatearTiempo = (tiempo_ms) => {
+        let St = Math.floor(tiempo_ms / 1000);
+        let S = St % 60;
+        let M = Math.floor((St / 60) % 60);
+        let H = Math.floor(St / 3600);
+        Number.prototype.ceros = function (n) {
+            return (this + "").padStart(n, "0");
+        }
 
-    function actualizarCronometro() {
-        let currentTime = new Date();
-        let tiempoTranscurrido = Math.floor((currentTime - startTime) / 1000);
-
-        // Mostrar el tiempo transcurrido en el cronómetro
-        let cronometro = document.getElementById("cronometro");
-        cronometro.innerHTML = tiempoTranscurrido + " seg";
+        return H.ceros(2) + ":" + M.ceros(2) + ":" + S.ceros(2);
     }
-    */
 
     nuevoJuego();
 });
