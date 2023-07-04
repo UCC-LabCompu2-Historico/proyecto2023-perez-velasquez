@@ -7,8 +7,13 @@ document.addEventListener('DOMContentLoaded', function() {
     let estado = true;
     let comienzo = false;
     let banderas = 0;
+    let nombreSelect = document.getElementById("nameInput");
     const reinicio = document.getElementById("reinicio");
     const dificultad = document.getElementById("gamemode");
+    /*
+    let intervaloCronometro;
+
+     */
 
     /**
      * Crea un nuevo juego, dependiendo si es necesario por un cambio de dificultad
@@ -21,6 +26,10 @@ document.addEventListener('DOMContentLoaded', function() {
         eventosCampo();
         crearCampo();
         actualizarCampo();
+        /*
+        intervaloCronometro = setInterval(cronometro, 1000);
+
+         */
     }
 
     /**
@@ -32,6 +41,7 @@ document.addEventListener('DOMContentLoaded', function() {
         estado = true;
         comienzo = false;
         banderas = 0;
+        nombreSelect.disabled = false;
     };
 
     /**
@@ -191,6 +201,9 @@ document.addEventListener('DOMContentLoaded', function() {
         ganar();
         perder();
         actualizarContador();
+        if(comienzo){
+            nombreSelect.disabled = true;
+        }
     }
 
     /**
@@ -214,6 +227,9 @@ document.addEventListener('DOMContentLoaded', function() {
             let tableroHTML = document.getElementById("tablero");
             tableroHTML.style.background = "green";
             estado = false;
+            /*
+            clearInterval(intervaloCronometro);
+             */
         }
     }
 
@@ -372,7 +388,22 @@ document.addEventListener('DOMContentLoaded', function() {
             nuevoJuego();
         }
     })
+/*
+    let cronometro = () => {
+        startTime = new Date();
+        setInterval(actualizarCronometro, 1000);
+    }
 
+    let actualizarCronometro = () => {
+        let currentTime = new Date();
+        let tiempoTranscurrido = Math.floor((currentTime - startTime) / 1000);
+
+        // Mostrar el tiempo transcurrido en el cronómetro
+        let cronometro = document.getElementById("cronometro");
+        cronometro.innerHTML = tiempoTranscurrido + " seg";
+    }
+
+ */
     /*
     tablero.addEventListener("click", function() {
         // Obtener todos los inputs
