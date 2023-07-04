@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', function() {
     let columnas = 15;
     let ancho = 30;
     let campo = [];
-    let minas = Math.floor(filas * columnas * 0.1);
+    let minas = 22;
     let estado = true;
     let comienzo = false;
     let banderas = 0;
@@ -26,10 +26,9 @@ document.addEventListener('DOMContentLoaded', function() {
     /**
      * Es una función, que se utiliza para reiniciar las variables, principalmente, para que
      * yo pueda reiniciar el tableero sin que haya efectos colaterales
-     * @method nuevoJuego
+     * @method reiniciarVariables
      */
     let reiniciarVariables = () => {
-        minas = Math.floor(filas * columnas * 0.1);
         estado = true;
         comienzo = false;
         banderas = 0;
@@ -201,18 +200,21 @@ document.addEventListener('DOMContentLoaded', function() {
      * @method ganar
      */
     let ganar = () => {
+        let contador = 0;
         for(let c = 0;c < columnas;c++) {
             for (let f = 0; f < filas; f++) {
-                if(campo[c][f].estado !== "destapado" && campo[c][f].valor === -1){
-                    continue;
-                }else{
+                if(campo[c][f].estado === "bandera" && campo[c][f].valor === -1){
+                    contador++;
+                }else if(campo[c][f].estado === "destapado" && campo[c][f].valor === -1) {
                     return;
                 }
             }
         }
-        let tableroHTML = document.getElementById("tablero");
-        tableroHTML.style.background = "green";
-        estado = false;
+        if(contador === minas){
+            let tableroHTML = document.getElementById("tablero");
+            tableroHTML.style.background = "green";
+            estado = false;
+        }
     }
 
     /**
@@ -329,66 +331,73 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
+    /**
+     * Actualiza la cantidad de bombas que quedan según las banderas que marcaste, pero
+     * tambien puede ser una cantidad negativa, dependiendo si el jugador puso más banderas que minas
+     * @method actualizarContador
+     */
     let actualizarContador = () => {
         let panel = document.getElementById("contador");
         panel.innerHTML = minas-banderas;
     }
 
-
-    /*
-    selectDificultad.addEventListener("change", function () {
-        const dificultadSeleccionada = selectDificultad.value;
-
-        if (dificultadSeleccionada === "facil") {
-            crearTablero(10, 5);
-            crearCampo(10,5);
-        } else if (dificultadSeleccionada === "intermedio") {
-            crearTablero(20, 10);
-            crearCampo(20,10);
-        } else if (dificultadSeleccionada === "dificil") {
-            crearTablero(40, 20);
-            crearCampo(40,20);
-        }
-    });
-    */
-    /*
-    selectorDificultad = () => {
-        let dificultad = document.getElementById("gamemode");
-        switch (dificultad){
-            case "facil":
-                break;
-            case "intermedio":
-                break;
-            case "dificil":
-                break;
-            default:
-                break;
-        }
-    }
-
+    /**
+     * Esto no es un método como tal, pero si es un evento que genera un nuevo juego si el usuario
+     * aprieta el boton de reinicio
      */
-
     reinicio.addEventListener("click", function (){
         nuevoJuego();
     });
 
+    /**
+     * Es un evento que permite crear un nuevo evento mientras seleccionas la dificultad.
+     */
     dificultad.addEventListener("change", function (){
         const dificultadSeleccionada = dificultad.value;
 
         if (dificultadSeleccionada === "facil") {
             filas = 15;
             columnas = 15;
+            minas = 22;
             nuevoJuego();
         } else if (dificultadSeleccionada === "intermedio") {
             filas = 20;
             columnas = 20;
+            minas = 50;
             nuevoJuego();
         } else if (dificultadSeleccionada === "dificil") {
             filas = 25;
             columnas = 25;
+            minas = 94;
             nuevoJuego();
         }
     })
+
+    /*
+    tablero.addEventListener("click", function() {
+        // Obtener todos los inputs
+        let inputs = document.getElementsByTagName("input");
+
+        // Recorrer los inputs y desactivarlos
+        for (let i = 0; i < inputs.length; i++) {
+            inputs[i].disabled = true;
+        }
+        // Iniciar el cronómetro
+        startTime = new Date();
+
+        // Actualizar el cronómetro cada segundo
+        setInterval(actualizarCronometro, 1000);
+    });
+
+    function actualizarCronometro() {
+        let currentTime = new Date();
+        let tiempoTranscurrido = Math.floor((currentTime - startTime) / 1000);
+
+        // Mostrar el tiempo transcurrido en el cronómetro
+        let cronometro = document.getElementById("cronometro");
+        cronometro.innerHTML = tiempoTranscurrido + " seg";
+    }
+    */
 
     nuevoJuego();
 });
