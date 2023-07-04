@@ -1,13 +1,13 @@
-document.addEventListener('DOMContentLoaded', function() {
-    let filas = 20;
-    let columnas = 20;
-    let ancho = 30;
-    let campo = [];
-    let minas = (filas * columnas * 0.1);
-    let estado = true;
-    let comienzo = false;
-    let banderas = minas;
+let filas = 20;
+let columnas = 20;
+let ancho = 30;
+let campo = [];
+let minas = (filas * columnas * 0.1);
+let estado = true;
+let comienzo = false;
+let banderas = minas;
 
+document.addEventListener('DOMContentLoaded', function() {
 
     /**
      * Crea un nuevo juego, dependiendo si es necesario por un cambio de dificultad
@@ -43,8 +43,8 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     /**
-     * Crea el tablero de juego, con celdas segun la dificultad elegida, pero en el Javascript,
-     * o sea es el tablero no visible.
+     * Crea el tablero de juego, con casillas segun la dificultad elegida, pero en el Javascript,
+     * o sea es el tablero no visible, en el cual se realizan las operaciones.
      * @method crearCampo
      */
     let crearCampo = () => {
@@ -67,8 +67,8 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     /**
-     * Crea el tablero de juego, con celdas segun la dificultad elegida, pero en el HTML,
-     * es el tablero visible
+     * Permite poder utilizar la función matematica random y floor, de tal manera
+     * que las minas, se coloquen de forma aleatoria, sin superponerse.
      * @method ponerMinas
      */
     let ponerMinas = () => {
@@ -184,6 +184,29 @@ document.addEventListener('DOMContentLoaded', function() {
      * la funcion perder
      * @method ganar
      */
+    /*
+    function verificarGanador() {
+        for (let f = 0; f < filas; f++) {
+            for (let c = 0; c < columnas; c++) {
+                if (tablero[c][f].estado != `descubierto`) { //Si la mina está cubeirta
+                    if (tablero[c][f].valor == -1) { //y es una mina
+                        //entonces vamos bien
+                        continue
+                    } else {
+                        //Si encuentra una celda cubierta, que no sea una mina, aún no se ha ganado
+                        return
+                    }
+                }
+            }
+        }
+        //Si al finalizar la comprobación, todas las celdas cubiertas son minas, entonces se ha ganado
+        let tableroHTML = document.getElementById("tablero")
+        tableroHTML.style.background = "green"
+        enJuego = false
+        sonido_ganador.play()
+        sonido_win.play()
+    }
+     */
     let ganar = () => {
         for(let c = 0;c < columnas;c++) {
             for (let f = 0; f < filas; f++) {
@@ -228,6 +251,11 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
+    /**
+     * Esta función lo que se encarga, es de agregar el evento de clic del mouse, con la interacción
+     * de las casillas.
+     * @method eventosCampo
+     */
     let eventosCampo = () => {
         for(let c = 0;c < columnas;c++){
             for(let f = 0;f < filas;f++){
@@ -239,21 +267,13 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    let areaRecursiva = (columna,fila) => {
-        for (let x = columna - 1; x <= columna + 1; x++) {
-            for (let y = fila - 1; y <= fila + 1; y++) {
-                if(x >= 0 && y >= 0 && x < filas && y < columnas){
-                    if(campo[x][y].estado === undefined) {
-                        campo[x][y].estado = "destapado";
-                        if(campo[x][y].valor === 0){
-                            areaRecursiva(x,y)
-                        }
-                    }
-                }
-            }
-        }
-    }
-
+    /**
+     * El rol de esta función es poder ingresar, que acciones va a a realizar el campo, dependiendo
+     * del tipo de interacción que haga el mouse, abajo están especificado que hace cada caso, y
+     * tambien permite que si el usuario aprieta en una casilla que sea distinta de cero, el programa
+     * creara otro juego hasta que le toque una casilla con valor 0.
+     * @method perder
+     */
     let clic = (casilla, c, f, me) => {
         if(!estado){
             return;
@@ -292,5 +312,62 @@ document.addEventListener('DOMContentLoaded', function() {
         actualizarCampo();
     }
 
+    /**
+     * Esta grosisima función lo que se realiza es que, utilizando el concepto de la recursividad,
+     * cuando yo apriete, sobre una celda vacía, va a destapar, todas las casillas no destapadas, a su
+     * alrededor, y si esa casilla tiene un valor 0, entonces la función se va a volver a llamar,
+     * hasta que no queden casillas con valor 0 para liberar.
+     * @method areaRecursiva
+     * @param columna;
+     * @param fila;
+     */
+    let areaRecursiva = (columna,fila) => {
+        for (let x = columna - 1; x <= columna + 1; x++) {
+            for (let y = fila - 1; y <= fila + 1; y++) {
+                if(x >= 0 && y >= 0 && x < filas && y < columnas){
+                    if(campo[x][y].estado === undefined) {
+                        campo[x][y].estado = "destapado";
+                        if(campo[x][y].valor === 0){
+                            areaRecursiva(x,y)
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    let ActualizarContador = () => {
+        let panel = document.getElementById()
+    }
+
     nuevoJuego();
+/*
+    selectDificultad.addEventListener("change", function () {
+        const dificultadSeleccionada = selectDificultad.value;
+
+        if (dificultadSeleccionada === "facil") {
+            crearTablero(10, 5);
+            crearCampo(10,5);
+        } else if (dificultadSeleccionada === "intermedio") {
+            crearTablero(20, 10);
+            crearCampo(20,10);
+        } else if (dificultadSeleccionada === "dificil") {
+            crearTablero(40, 20);
+            crearCampo(40,20);
+        }
+    });
+    */
+    selectorDificultad = () => {
+        let dificultad = document.getElementById("gamemode");
+        switch (dificultad){
+            case "facil":
+                break;
+            case "intermedio":
+                break;
+            case "dificil":
+                break;
+            default:
+                break;
+        }
+    }
 });

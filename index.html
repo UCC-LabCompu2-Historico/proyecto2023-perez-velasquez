@@ -54,15 +54,15 @@
     </div>
 
     <!--menu-->
-
+<!--
     <div class="menu">
         <div class="grid-item">
             <img class="parainfo" id="bomb_menu" src="Imagenes/bomba.png" alt="Imagen de una bombita">
         </div>
         <div class="info" id="contador">00</div>
-
+-->
         <!--Acá hay que poner una variable en js para que salga, segun la dificultad, la cant de bombas correspondientes-->
-
+<!--
         <div class="grid-item">
             <img class="parainfo" id="timer" src="Imagenes/alarma-activada.png" alt="Imagen de un reloj">
         </div>
@@ -76,6 +76,24 @@
                 </button>
             </label>
         </div>
+    </div>
+    -->
+    <div class="menu">
+        <img class="parainfo" id="bomb_menu" src="Imagenes/bomba.png" alt="Imagen de una bombita">
+        <div class="info" id="contador">00</div>
+
+        <!--Acá hay que poner una variable en js para que salga, segun la dificultad, la cant de bombas correspondientes-->
+
+        <img class="parainfo" id="timer" src="Imagenes/alarma-activada.png" alt="Imagen de un reloj">
+        <div class="info">
+            <span id="cronometro"></span>
+        </div>
+
+        <label for="reinicio">
+            <button id="reinicio" onclick="nuevoJuego()">
+                <img class="parainfo" id="restart" src="Imagenes/reiniciar.png" alt="Imagen de un reinicio">
+            </button>
+        </label>
     </div>
 </section>
 
