@@ -1,17 +1,39 @@
 /*ESTILOS DEL MENU*/
+*{
+    box-sizing: border-box;
+}
+
+h1 {
+    font-family: 'Aclonica', 'fantasy', sans-serif;
+    color: #001ed1;
+    font-size: 700%;
+    margin: 30px;
+    text-align: center;
+}
+
+
+.bicolor {
+    color: #db3b26;
+}
+
+body {
+    background-color: #2d2d2d;
+    font-family: 'Aclonica', 'fantasy', sans-serif;
+    font-weight: lighter;
+}
 
 #input {
     font-family: 'Aclonica', 'fantasy', sans-serif;
     font-weight: lighter;
     color: #c2c2c2;
-    line-height: 10%;
-    display: grid;
     column-gap: 50px;
     row-gap: 15px;
-    grid-template-columns: max-content max-content;
+    margin-bottom: 20px;
+    text-align: center;
+    padding: 10px;
 }
 
-.gamemode {
+.gamemode{
     background-color: #c2c2c2;
     border-radius: 20% 15% 20% 15%;
     position: relative;
@@ -22,39 +44,31 @@
     font-weight: lighter;
 }
 
-#nameInput {
+#nameInput{
     width: 100px;
     height: 30px;
     font-family: 'Aclonica', 'fantasy', sans-serif;
+    font-size: 100%;
     font-weight: lighter;
     background-color: #c2c2c2;
     color: #2d2d2d;
 }
 
-.menu {
-    display: grid;
-    padding-top: 5%;
-    column-gap: 5%;
-    row-gap: 5%;
-    max-width: 300px;
-    max-height: 75px;
-    z-index: 1;
+.menu{
     display: flex;
-    object-position: center;
+    justify-content: center;
+    align-items: center;
     font-family: 'Aclonica', 'fantasy', sans-serif;
     color: #c2c2c2;
     text-align: center;
-}
+    margin-bottom: 30px;
 
-.info {
-    margin-top: 15px;
 }
 
 .parainfo {
-    z-index: 2;
-    max-width: 50px;
-    width: 90%;
-    padding-left: 3%;
+    width: 80px;
+    height: 80px;
+    margin: 0 15px;
 }
 
 button {
@@ -67,6 +81,56 @@ button {
     transition-duration: 3s;
 }
 
-section.input {
-    width: 50%;
+table{
+    transition: all 1s;
+    background: #a29898;
+    margin: auto;
+    border-spacing: 0;
+}
+
+td{
+    transition: all 1s;
+    border: 1px solid #2f2d2d;
+    width: 30px;
+    height: 30px;
+    box-sizing: border-box;
+    text-align: center;
+    box-shadow: inset 3px 3px 0 0 #eee9e9,inset -3px -3px 0 0 #343131;
+}
+
+footer {
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    line-height: 0.9;
+    text-align: center;
+    padding: 20px;
+    color: white;
+    font-size: 80%;
+    font-family: 'Aclonica', 'fantasy', sans-serif;
+}
+
+a {
+    color: #db3b26;
+    transition: all 0.3s ease;
+    font-size: 100%;
+}
+
+a:hover {
+    color: #db3b26;
+    font-size: 1.3em;
+}
+
+a:active {
+    color: #001ed1;
+}
+
+#miCanvas{
+    top: 0;
+    left: 0;
+    right: 0;
+    position: absolute;
+    width: 100%;
+    height: 175px;
+    background-color: rgba(0, 0, 0, 0%);
 }

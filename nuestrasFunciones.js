@@ -1,214 +1,149 @@
-document.addEventListener("DOMContentLoaded", function() {
-    const tablero = document.getElementById("tablero");
-    const selectDificultad = document.getElementById("gamemode");
+document.addEventListener('DOMContentLoaded', function() {
+    let filas = 15;
+    let columnas = 15;
+    let ancho = 30;
     let campo = [];
-    let enJuego = true
-    let juegoiniciado = false;
+    let minas = 22;
+    let estado = true;
+    let comienzo = false;
     let banderas = 0;
+    let tiempoRef = Date.now();
+    let cronometrar = false;
+    let acumulado = 0;
+    let nombreSelect = document.getElementById("nameInput");
+    const reinicio = document.getElementById("reinicio");
+    const dificultad = document.getElementById("gamemode");
+    const canvas = document.getElementById("miCanvas");
+    let ctx = canvas.getContext('2d');
+
     /**
-     * Crea el tablero de juego, con celdas segun la dificultad
-     * elegida, pero en el HTML, es el tablero visible
+     * Crea un nuevo juego, dependiendo si es necesario por un cambio de dificultad
+     * o por que simplemente necesita no caer en una casilla con mina
+     * @method nuevoJuego
+     */
+    let nuevoJuego = () => {
+        reiniciarVariables();
+        limpiarCanvas(canvas);
+        crearTablero();
+        eventosCampo();
+        crearCampo();
+        actualizarCampo();
+    }
+
+    /**
+     * Es una función, que se utiliza para reiniciar las variables, principalmente, para que
+     * yo pueda reiniciar el tableero sin que haya efectos colaterales
+     * @method reiniciarVariables
+     */
+    let reiniciarVariables = () => {
+        estado = true;
+        comienzo = false;
+        banderas = 0;
+        nombreSelect.disabled = false;
+        acumulado = 0;
+        cronometrar = false;
+    };
+
+    /**
+     * esta funcion nos limpia el canvas para comenzar un nuevo juego y poder tirar confetti tranquilito
+     * @param canvas
+     * @method limpiarCanvas
+     */
+    let limpiarCanvas = (canvas) => {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+    };
+
+    /**
+     * Crea el tablero de juego, con celdas segun la dificultad elegida, pero en el HTML,
+     * es el tablero visible
      * @method crearTablero
-     * @param {int} columnas
-     * @param {int} filas
      */
-    let crearTablero = (columnas, filas) => {
-        tablero.innerHTML = "";
-
-        const anchoCasilla = 800 / columnas;
-        const altoCasilla = 400 / filas;
-
-        for (let fila = 0; fila < filas; fila++) {
-            for (let columna = 0; columna < columnas; columna++) {
-                const casilla = document.createElement("div");
-                casilla.classList.add("casilla");
-                casilla.id = `casilla-${columna}-${fila}`;
-                casilla.style.width = `${anchoCasilla}px`;
-                casilla.style.height = `${altoCasilla}px`;
-                tablero.appendChild(casilla);
+    let crearTablero = () => {
+        let html = ""
+        for (let f = 0;f < filas; f++){
+            html += `<tr>`
+            for (let c = 0;c < columnas; c++){
+                html += `<td id="casilla-${c}-${f}">`
+                html += `</td>`
             }
+            html += `</tr>`
         }
+        let tableroHTML = document.getElementById("tablero")
+        tableroHTML.innerHTML = html
+        tableroHTML.style.width = columnas * ancho + "px";
+        tableroHTML.style.height = filas * ancho + "px";
+        tableroHTML.style.background = "#a29898";
     }
 
     /**
-     * Permite poder crear el tablero en caso de ser necesario,
-     * Pero es el tablero del javascript
+     * Crea el tablero de juego, con casillas segun la dificultad elegida, pero en el Javascript,
+     * o sea es el tablero no visible, en el cual se realizan las operaciones.
      * @method crearCampo
-     * @param {int} columnas
-     * @param {int} filas
      */
-    let crearCampo = (filas,columnas) =>{
-        vaciarCampo(filas,columnas);
-        ponerBombas(filas,columnas);
-        contarBombas(filas,columnas);
-        mostrarCampo(filas,columnas);
-        console.log(campo);
-        console.log(tablero);
+    let crearCampo = () => {
+        vaciarCampo();
+        ponerMinas();
+        valorizarCampo();
+        contarMinas();
     }
 
     /**
-     * Permite ingresar los eventos sobre el campo (tablero del js)
-     * Con los cambios del usuario
-     * @method eventosCampo
-     * @param {int} columnas
-     * @param {int} filas
+     * Permite vaciar el campo, o sea resetear todos los valores del campo anterior,
+     * igualando el campo a un arreglo vacío y en cada arreglo vacío pushea otro arreglo vacío
+     * @method crearTablero
      */
-    let eventosCampo = (filas,columnas) =>{
-        for (let f = 0; f < filas; f++) {
-            for (let c = 0; c < columnas; c++) {
-                let casilla = document.getElementById(`casilla-${c}-${f}`)
-                casilla.addEventListener("mouseup",me=>{
-                    simpleclick(casilla,f,c,me)
-                })
-            }
-        }
-    }
-
-    /**
-     * Permite ingresar los eventos del Mouse que interactuan con
-     * el campo, que es el tablero del Javascript
-     * @method eventosCampo
-     * @param {int} columna
-     * @param {int} fila
-     * @param {element} casilla
-     * @param {function} me
-     */
-    let simpleclick = (casilla,fila,columna,me) => {
-        if(!enJuego){
-            return;
-        }
-        if(casilla.value === "descubierto"){
-            return;
-        }
-        switch (me.button){
-            case 0://el 0 nos indica que es el click izquierdo
-                if(casilla.value === "marcado"){
-                    break;
-                }
-                while(juegoiniciado && campo[fila][columna] !== 0){
-                    crearCampo(filas,columnas);
-                }
-                casilla.value = "descubierto";
-                juegoiniciado = true;
-                break;
-            case 1:
-                break;
-            case 2:
-                if(casilla.value === "marcado"){
-                    casilla.value = "cubierto";
-                    banderas--;
-                }else{
-                    casilla.value = "marcado"
-                    banderas++;
-                }
-                break;
-        }
-    }
-
-    /**
-     * Permite mantener actualizado el campo (tablero del js)
-     * Con los cambios del usuario
-     * @method mostrarCampo
-     * @param {int} columnas
-     * @param {int} filas
-     */
-    let mostrarCampo = (filas,columnas) =>{
-        for (let f = 0; f < filas; f++) {
-            for (let c = 0; c < columnas; c++) {
-                let casilla;
-                switch (campo[f][c]){
-                    case -1:
-                        casilla = document.getElementById(`casilla-${f}-${c}`)
-                        casilla.innerHTML = '<span class="bomb-letter">B</span>';
-                        casilla.value = "cubierto";
-                        break;
-                    case 0:
-                        casilla = document.getElementById(`casilla-${f}-${c}`)
-                        casilla.innerHTML = '<span class="vacia"></span>';
-                        casilla.value = "cubierto";
-                        break;
-                    default:
-                        casilla = document.getElementById(`casilla-${f}-${c}`)
-                        casilla.innerHTML = `<span class="contorno">${campo[f][c]}</span>`;
-                        casilla.value = "cubierto";
-                        break;
-                }
-            }
-        }
-    }
-
-    /**
-     * Permite poder vaciar el tablero en caso de ser necesario y
-     * Permite crear el campo nulo, que luego sera completado
-     * @method vaciarCampo
-     * @param {int} columnas
-     * @param {int} filas
-     */
-    let vaciarCampo = (filas,columnas) => {
+    let vaciarCampo = () => {
         campo = [];
-        for (let f = 0; f < filas; f++) {
-            campo.push([])
+        for (let c = 0; c < columnas; c++) {
+            campo.push([]);
         }
-    }
-
-    //
-    tablero.addEventListener("click", function() {
-        // Obtener todos los inputs
-        let inputs = document.getElementsByTagName("input");
-
-        // Recorrer los inputs y desactivarlos
-        for (let i = 0; i < inputs.length; i++) {
-            inputs[i].disabled = true;
-        }
-        // Iniciar el cronómetro
-        startTime = new Date();
-
-        // Actualizar el cronómetro cada segundo
-        setInterval(actualizarCronometro, 1000);
-    });
-
-    function actualizarCronometro() {
-        let currentTime = new Date();
-        let tiempoTranscurrido = Math.floor((currentTime - startTime) / 1000);
-
-        // Mostrar el tiempo transcurrido en el cronómetro
-        let cronometro = document.getElementById("cronometro");
-        cronometro.innerHTML = tiempoTranscurrido + " seg";
     }
 
     /**
-     * Coloca las bombas, en diferentes partes del tablero
-     * garantizando que no se superpongan
-     * @method ponerBombas
-     * @param {int} columnas
-     * @param {int} filas
+     * Permite poder utilizar la función matematica random y floor, de tal manera
+     * que las minas, se coloquen de forma aleatoria, sin superponerse.
+     * @method ponerMinas
      */
-    let ponerBombas = (filas,columnas) => {
-        let minas = columnas * filas * 0.1;
-        let contador = 0;
-        do{
-            let fil = Math.floor(Math.random() * filas);
-            let col = Math.floor(Math.random() * columnas);
-            if(campo[fil][col]){
-                campo[fil][col]={valor: -1};
-                contador++;
+    let ponerMinas = () => {
+        for(let i = 0;i < minas;i++){
+            let c;
+            let f;
+            do{
+                f = Math.floor(Math.random() * filas);
+                c = Math.floor(Math.random() * columnas);
+            } while (campo[c][f])
+            campo[c][f] = {valor: -1};
+        }
+
+    }
+
+    /**
+     * Permite poder asignarle a todas las casillas que no tengan nada asignado
+     * el valor momentaneo 0.
+     * @method valorizarCampo
+     */
+    let valorizarCampo = () => {
+        for (let c = 0;c < columnas;c++){
+            for(let f = 0;f < filas;f++){
+                if(!campo[c][f]){
+                    campo[c][f] = {valor: 0};
+                }
             }
-        }while(contador<minas)
+        }
     }
+
     /**
-     * Permite contabilizar las cantidad de bombas en el perimetro
-     * De una de las casillas en la posición (fila,columna)
-     * @method contarBombas
-     * @param {int} filas
-     * @param {int} columnas
-     * @param {int} fila
-     * @param {int} columna
+     * Permite contar la cantidad de Minas que tiene una casilla a su alrededor
+     * y devuelve el número cálculado
+     * @method contar
+     * @param columna
+     * @param  fila
      */
-    let contar = (filas, columnas, fila, columna) => {
+    let contar = (columna,fila) => {
         let resultado = 0;
-        for (let x = fila - 1; x <= fila + 1; x++) {
-            for (let y = columna - 1; y <= columna + 1; y++) {
-                if (x >= 0 && y >= 0 && x < filas && y < columnas && campo[x][y] === -1) {
+        for (let x = columna - 1; x <= columna + 1; x++) {
+            for (let y = fila - 1; y <= fila + 1; y++) {
+                if (x >= 0 && y >= 0 && x < filas && y < columnas && campo[x][y].valor === -1) {
                     resultado++;
                 }
             }
@@ -216,160 +151,329 @@ document.addEventListener("DOMContentLoaded", function() {
         return resultado;
     }
 
-
     /**
-     * Permite contabilizar las cantidad de bombas en el perimetro
-     * De cada una de las casillas
-     * @method contarBombas
-     * @param {int} columnas
-     * @param {int} filas
+     * Es la función que se encarga de poder actualizar el valor de las casillas,
+     * usando la función contar, asignamos ese valor a las casillas del campo
+     * @method contarMinas
      */
-    let contarBombas = (filas,columnas) => {
-        for (let f = 0;f < filas;f++){
-            for(let c = 0;c < columnas;c++){
-                if(campo[f][c]===0){
-                    campo[f][c] = contar(filas,columnas,f,c);
+    let contarMinas = () => {
+        for (let c = 0;c < columnas;c++){
+            for(let f = 0;f < filas;f++){
+                if(campo[c][f].valor !==-1){
+                    campo[c][f].valor = contar(c,f);
                 }
             }
         }
     }
 
     /**
-     * Selecciona la dificultad del juego y, en consecuencia, crea el
-     * tablero efectivamente llamando a la función correspondiente
-     * @method selectDificultad
+     * Permite verificar el estado del campo, de tal manera que lee los valores, y logra
+     * interactuar con el tablero del HTML, para que cada uno de los valores de las casillas
+     * tenga sentido a la hora de jugar, utilizando los estados "undefined", "destapado" y
+     * "bandera", en caso de ser undefined, significa que la casilla está tapada, destapado
+     * significa que está tapada, y la bandera significa que el usuario apretó para poner una
+     * bandera, y cada uno de estos estados se programó de manera que tenga sentido con el j
+     * juego clásico del buscaminas
+     * @method actualizarCampo
      */
-    selectDificultad.addEventListener("change", function () {
-        const dificultadSeleccionada = selectDificultad.value;
-
-        if (dificultadSeleccionada === "facil") {
-            crearTablero(10, 5);
-            crearCampo(10,5);
-        } else if (dificultadSeleccionada === "intermedio") {
-            crearTablero(20, 10);
-            crearCampo(20,10);
-        } else if (dificultadSeleccionada === "dificil") {
-            crearTablero(40, 20);
-            crearCampo(40,20);
+    let actualizarCampo = () => {
+        for(let c = 0;c < columnas;c++){
+            for(let f = 0;f < filas;f++){
+                let casilla = document.getElementById(`casilla-${c}-${f}`);
+                if(campo[c][f].estado === "destapado"){
+                    casilla.style.boxShadow = "none";
+                    switch (campo[c][f].valor){
+                        case -1:
+                            //es un favicon que usamos de la libreria font-awesome.
+                            casilla.innerHTML = `<i class="fa-solid fa-land-mine-on"></i>`;
+                            casilla.style.background = "#cbc1c1";
+                            break;
+                        case 0:
+                            break;
+                        default:
+                            casilla.innerHTML = campo[c][f].valor;
+                    }
+                }
+                if(campo[c][f].estado === "bandera"){
+                    casilla.innerHTML = `<i class="fa-solid fa-flag"></i>`;
+                    casilla.style.color = "#001ed1";
+                    casilla.style.transition = "none";
+                }
+                if(campo[c][f].estado === undefined){
+                    casilla.innerHTML = ``;
+                }
+                if(campo[c][f].estado === "destapado"){
+                    casilla.style.color = "black";
+                }
+            }
         }
-    });
-
+        ganar();
+        perder();
+        actualizarContador();
+        if(comienzo){
+            nombreSelect.disabled = true;
+        }
+    }
 
     /**
-     // Obtén una referencia al elemento Canvas y su contexto
-     var canvas = document.getElementById("canvas");
-     var ctx = canvas.getContext("2d");
-
-     // Configura el color inicial del Canvas
-     var canvasColor = "#FFFFFF";
-
-     // Detecta el clic en una casilla
-     canvas.addEventListener("click", function(event) {
-    var rect = canvas.getBoundingClientRect();
-    var mouseX = event.clientX - rect.left;
-    var mouseY = event.clientY - rect.top;
-
-    // Comprueba si la casilla con coordenadas (mouseX, mouseY) es una bomba
-    var esBomba = comprobarSiEsBomba(mouseX, mouseY);
-
-    // Cambia el color del Canvas si la casilla es una bomba
-    if (esBomba) {
-        canvasColor = "#FF0000"; // Cambia el color a rojo
-    }
-
-    // Dibuja en el Canvas
-    dibujarCanvas();
-});
-
+     * Esta función se indica de ver si el jugador ha ganado, lo hace verificando que todas
+     * las casillas con valor -1 estén tapadas, en caso contrario sale de la función y se activa
+     * la funcion perder
+     * @method ganar
      */
-    //Tablero inicial
-    crearTablero(10, 5);
-    crearCampo(10,5);
-});
-/*
- function crearPantalla() {
-      let cad = ''
-      for (let f = 0; f < 10; f++) {
-        for (c = 0; c < 10; c++) {
-          cad += `<span class="celda gris" id="celda${f}${c}" data-fila="${f}" data-columna="${c}"></span>`
+    let ganar = () => {
+        let contador = 0;
+        for(let c = 0;c < columnas;c++) {
+            for (let f = 0; f < filas; f++) {
+                if(campo[c][f].estado === "bandera" && campo[c][f].valor === -1){
+                    contador++;
+                }else if(campo[c][f].estado === "destapado" && campo[c][f].valor === -1) {
+                    return;
+                }
+            }
         }
-      }
-      document.querySelector(".contenedor").innerHTML = cad
+        if(contador === minas){
+            let tableroHTML = document.getElementById("tablero");
+            tableroHTML.style.background = "green";
+            generarConfetti(canvas);
+            estado = false;
+            cronometrar = false;
+        }
+    };
+
+    /**
+     * Esta función se indica de ver si el jugador ha perdido, lo hace verificando si el
+     * usuario destapó una mina, en ese caso el tablero se pone rojito.
+     * @method perder
+     */
+    let perder = () => {
+        for(let c = 0;c < columnas;c++){
+            for(let f = 0;f < filas;f++){
+                if(campo[c][f].estado === "destapado" && campo[c][f].valor === -1){
+                    let tableroHTML = document.getElementById("tablero");
+                    tableroHTML.style.background = "#db3b26";
+                    estado = false;
+                    cronometrar = false;
+                }
+            }
+        }
+        if(estado){
+            return;
+        }
+        for(let c = 0;c < columnas;c++) {
+            for (let f = 0; f < filas; f++) {
+                if (campo[c][f].valor === -1) {
+                    let casilla = document.getElementById(`casilla-${c}-${f}`);
+                    casilla.innerHTML = `<i class="fa-solid fa-land-mine-on"></i>`;
+                    casilla.style.color = "black";
+                }
+            }
+        }
     }
 
-    function destapar(arreglo, fila, columna, evento) {
-      if (arreglo[fila][columna] === 'b') {
-        evento.target.style.backgroundColor = 'red'
-        setTimeout(() => alert('Perdiste'), 10);
-        estado = false
-      } else {
-        if (arreglo[fila][columna] >= 1 && arreglo[fila][columna] <= 8) {
-          evento.target.textContent = arreglo[fila][columna]
-          evento.target.classList.add('verde')
-          evento.target.classList.remove('gris')
-        } else {
-          if (arreglo[fila][columna] === 0) {
-            recorrer(arreglo, fila, columna)
-            console.table(arreglo)
-          }
+    /**
+     * Esta función lo que se encarga, es de agregar el evento de clic del mouse, con la interacción
+     * de las casillas.
+     * @method eventosCampo
+     */
+    let eventosCampo = () => {
+        for(let c = 0;c < columnas;c++){
+            for(let f = 0;f < filas;f++){
+                let casilla = document.getElementById(`casilla-${c}-${f}`);
+                casilla.addEventListener("mouseup",me =>{
+                    clic(casilla, c, f, me)
+                })
+            }
         }
-      }
-      verificarGanado()
     }
 
-    function verificarGanado() {
-      const celdas = document.querySelectorAll(".contenedor span")
-      let cant = 0
-      celdas.forEach(celda => {
-        if (celda.classList.contains('verde')) {
-          cant++
+    /**
+     * El rol de esta función es poder ingresar, que acciones va a a realizar el campo, dependiendo
+     * del tipo de interacción que haga el mouse, abajo están especificado que hace cada caso, y
+     * tambien permite que si el usuario aprieta en una casilla que sea distinta de cero, el programa
+     * creara otro juego hasta que le toque una casilla con valor 0.
+     * @method perder
+     */
+    let clic = (casilla, c, f, me) => {
+        if(!estado){
+            return;
         }
-      })
-      if (cant == 90) {
-        estado = false
-        setTimeout(() => alert('Ganaste'), 10)
-      }
+        if(campo[c][f].estado === "destapado"){
+            return;
+        }
+        switch (me.button){
+            case 0: //Click izquierdo
+                if(campo[c][f].estado === "bandera"){
+                    break;
+                }
+                while(!comienzo && campo[c][f].valor !== 0){
+                    nuevoJuego();
+                }
+                campo[c][f].estado = "destapado";
+                if(!comienzo){
+                    cronometrar = true;
+                }
+                comienzo = true;
+                if(campo[c][f].valor === 0){
+                    areaRecursiva(c,f);
+                }
+                break;
+            case 1: //Scroll
+                break;
+            case 2: //Click derecho
+                if(campo[c][f].estado === "bandera"){
+                    campo[c][f].estado = undefined;
+                    banderas--;
+                }else{
+                    campo[c][f].estado = "bandera"
+                    banderas++;
+                }
+                break;
+            default:
+                break;
+        }
+        actualizarCampo();
     }
 
-    function recorrer(arreglo, fil, col) {
-      if (fil >= 0 && fil < 10 && col >= 0 && col < 10) {
-        if (arreglo[fil][col] == 0) {
-          arreglo[fil][col] = "x"
-          document.querySelector(`#celda${fil}${col}`).classList.add('verde')
-          document.querySelector(`#celda${fil}${col}`).classList.remove('gris')
-          recorrer(arreglo, fil, col + 1)
-          recorrer(arreglo, fil, col - 1)
-          recorrer(arreglo, fil + 1, col)
-          recorrer(arreglo, fil - 1, col)
-          recorrer(arreglo, fil - 1, col - 1)
-          recorrer(arreglo, fil - 1, col + 1)
-          recorrer(arreglo, fil + 1, col + 1)
-          recorrer(arreglo, fil + 1, col - 1)
-        } else {
-          if (arreglo[fil][col] >= 1 && arreglo[fil][col] <= 8) {
-            document.querySelector(`#celda${fil}${col}`).classList.add('verde')
-            document.querySelector(`#celda${fil}${col}`).classList.remove('gris')
-            document.querySelector(`#celda${fil}${col}`).textContent = arreglo[fil][col]
-          }
+    /**
+     * Esta grosisima función lo que se realiza es que, utilizando el concepto de la recursividad,
+     * cuando yo apriete, sobre una celda vacía, va a destapar, todas las casillas no destapadas, a su
+     * alrededor, y si esa casilla tiene un valor 0, entonces la función se va a volver a llamar,
+     * hasta que no queden casillas con valor 0 para liberar.
+     * @method areaRecursiva
+     * @param columna;
+     * @param fila;
+     */
+    let areaRecursiva = (columna,fila) => {
+        for (let x = columna - 1; x <= columna + 1; x++) {
+            for (let y = fila - 1; y <= fila + 1; y++) {
+                if(x >= 0 && y >= 0 && x < filas && y < columnas){
+                    if(campo[x][y].estado === undefined) {
+                        campo[x][y].estado = "destapado";
+                        if(campo[x][y].valor === 0){
+                            areaRecursiva(x,y)
+                        }
+                    }
+                }
+            }
         }
-      }
     }
 
-    document.querySelector(".contenedor").addEventListener('click', evento => {
-      if (evento.target.tagName == 'SPAN' && estado) {
-        const fila = parseInt(evento.target.dataset.fila)
-        const columna = parseInt(evento.target.dataset.columna)
-        if (document.querySelector(`#celda${fila}${columna}`).classList.contains('gris')) {
-          destapar(arreglo, fila, columna, evento)
+    /**
+     * Actualiza la cantidad de bombas que quedan según las banderas que marcaste, pero
+     * tambien puede ser una cantidad negativa, dependiendo si el jugador puso más banderas que minas
+     * @method actualizarContador
+     */
+    let actualizarContador = () => {
+        let panel = document.getElementById("contador");
+        panel.innerHTML = minas-banderas;
+    }
+
+    /**
+     * Esto no es un método como tal, pero si es un evento que genera un nuevo juego si el usuario
+     * aprieta el boton de reinicio
+     */
+    reinicio.addEventListener("click", function (){
+        nuevoJuego();
+    });
+
+    /**
+     * Es un evento que permite crear un nuevo evento mientras seleccionas la dificultad.
+     */
+    dificultad.addEventListener("change", function (){
+        const dificultadSeleccionada = dificultad.value;
+
+        if (dificultadSeleccionada === "facil") {
+            filas = 15;
+            columnas = 15;
+            minas = 22;
+            nuevoJuego();
+        } else if (dificultadSeleccionada === "intermedio") {
+            filas = 20;
+            columnas = 20;
+            minas = 50;
+            nuevoJuego();
+        } else if (dificultadSeleccionada === "dificil") {
+            filas = 25;
+            columnas = 25;
+            minas = 94;
+            nuevoJuego();
         }
-      }
     })
 
-    crearPantalla()
+    /**
+     * Es una función Es una función de temporización incorporada que se utiliza para
+     * ejecutar repetidamente un bloque de código o una función con un intervalo de tiempo específico.
+     * @method setInterval
+     */
+    setInterval(() => {
+        let tiempo = document.getElementById("cronometro");
+        if (cronometrar) {
+            acumulado += Date.now() - tiempoRef;
+        }
+        tiempoRef = Date.now();
+        tiempo.innerHTML = formatearTiempo(acumulado);
+    }, 1000 / 60);
 
-    let estado = true  // Juego activo o terminado
-    const arreglo = crearTablero()
-    disponerBombas(arreglo)
-    generarBombasProximas(arreglo)
-    console.table(arreglo)
-*/
+    /**
+     * toma un valor de tiempo en milisegundos y lo convierte en una cadena de texto con el formato "HH:MM:SS.MMM",
+     * donde HH son las horas, MM  los minutos, SS  los segundos y MMM  milisegundos.
+     * @method setInterval
+     */
+    let formatearTiempo = (tiempo_ms) => {
+        let St = Math.floor(tiempo_ms / 1000);
+        let S = St % 60;
+        let M = Math.floor((St / 60) % 60);
+        let H = Math.floor(St / 3600);
+        Number.prototype.ceros = function (n) {
+            return (this + "").padStart(n, "0");
+        }
+
+        return H.ceros(2) + ":" + M.ceros(2) + ":" + S.ceros(2);
+    }
+
+    /**
+     * Esta funcion me genera el confetti que sale cuando el jugador gana la partida, creando particulas de los
+     * diferentes colores seleccionados, para luego animarlos y obtener el festejo deseado
+     * @method generarConfetti
+     */
+    let generarConfetti = (canvas) => {
+        let particulas = [];
+
+        const colors = ['#8ecc75', '#528fd3', '#e081b7']; //Colores del Confetti
+
+        for (let i = 0; i < 300; i++) {
+            let x = Math.random() * canvas.width;
+            let y = Math.random() * canvas.height;
+            let size = Math.random() * 0.5 + 5;
+            let color = colors[Math.floor(Math.random() * colors.length)];
+            let speed = Math.random() * 30;
+            let rota = Math.random() * 360;
+
+            particulas.push({x, y, size, color, speed, rota});
+        }
+        /**
+         * Esta funcion anima el confetti para que caiga en cascada
+         * @method animarConfetti
+         */
+        let animarConfetti = () => {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for(let i=0; i<300; i++){
+                let particula = particulas[i];
+                particula.y += particula.speed;
+                ctx.beginPath();
+                ctx.save();
+                ctx.fillStyle = particula.color;
+                ctx.translate(particula.x, particula.y);
+                ctx.rotate(-particula.rota * Math.PI / 180);
+                ctx.fillRect(-particula.size/2, -particula.size/2, particula.size, particula.size);
+                ctx.restore();
+                ctx.closePath();
+            }
+            requestAnimationFrame(animarConfetti);
+        };
+        animarConfetti();
+    };
+
+    nuevoJuego();
+});
