@@ -5,9 +5,7 @@
     <title>BuscaMinas</title>
 
     <!--Hojas de estilos-->
-    <link rel="stylesheet" href="Estilo1.css" type="text/css"> <!--Menu, info-->
-    <link rel="stylesheet" href="Estilo2.css" type="text/css"> <!--Header, footer, gral-->
-    <link rel="stylesheet" href="Estilo3.css" type="text/css"> <!--Canvas, tablero-->
+    <link rel="stylesheet" href="Estilo1.css" type="text/css"> <!--Hoja de Estilos-->
     <link rel="stylesheet" href="Estilo.css" type="text/css">  <!--Media Querys-->
 
     <!--Fuentes-->
@@ -31,7 +29,6 @@
 </head>
 
 <body>
-
 <section id="title">
     <!--header-->
     <div>
@@ -52,9 +49,12 @@
         <label for="nameInput">Ingrese su nombre:</label>
         <input type="text" id="nameInput" placeholder="Agus">
     </div>
+
+    <!--menu-->
     <div class="menu">
         <img class="parainfo" id="bomb_menu" src="Imagenes/bomba.png" alt="Imagen de una bombita">
         <div class="info" id="contador">00</div>
+
         <img class="parainfo" id="timer" src="Imagenes/alarma-activada.png" alt="Imagen de un reloj">
         <div class="info">
             <span id="cronometro"></span>
@@ -72,13 +72,16 @@
 <table id="tablero" oncontextmenu="return false">
 
 </table>
-    <footer>
-        <p>Proyecto 2023. Perez, Agustina - Velasquez, Mateo.
-            <a href="https://youtu.be/LFECjSinhp0" target="_blank">Como jugar</a>
-        </p>
-    </footer>
 
-        <canvas id="game">
-        </canvas>
+<footer>
+    <p>Proyecto 2023. Perez, Agustina - Velasquez, Mateo.
+        <a href="https://youtu.be/LFECjSinhp0" target="_blank">Como jugar</a>
+    </p>
+</footer>
+
+<div>
+    <canvas id="miCanvas"></canvas>
+</div>
+
 </body>
 </html>
