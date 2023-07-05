@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', function() {
     let columnas = 15;
     let ancho = 30;
     let campo = [];
-    let minas = 2;
+    let minas = 22;
     let estado = true;
     let comienzo = false;
     let banderas = 0;
