@@ -1,40 +1,24 @@
 /*ESTILOS CANVAS Y TABLERO*/
-
-#game {
-    margin-left: 5%;
-    margin-top: 75px;
-    width: 800px;
-    height: 400px;
-    display: flex;
-    z-index: 3;
-    background-color: #ffffff00;
+/*
+*{
+    box-sizing: border-box;
 }
 
-#tablero {
-    width: 800px;
-    height: 400px;
-    display: flex;
-    flex-wrap: wrap;
-    margin-left: 5%;
-    margin-top: 75px;
-    z-index: 2;
-  }
+table{
+    transition: all 1s;
+    background: #a29898;
+    margin: auto;
+    border-spacing: 0;
+}
 
-  .casilla {
-    width: calc(100% / 10);
-    height: calc(100% / 5);
+td{
+    transition: all 1s;
     border: 1px solid #2f2d2d;
+    width: 30px;
+    height: 30px;
     box-sizing: border-box;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: #d2cccc;
-    font-family: 'Aclonica', 'fantasy', sans-serif;
-  }
-  .gris{
+    text-align: center;
+    box-shadow: inset 3px 3px 0 0 #eee9e9,inset -3px -3px 0 0 #343131;
+}
 
-  }
-
-  .verde{
-
-  }
+ */
