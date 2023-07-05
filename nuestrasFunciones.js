@@ -477,3 +477,4 @@ document.addEventListener('DOMContentLoaded', function() {
 
     nuevoJuego();
 });
+
