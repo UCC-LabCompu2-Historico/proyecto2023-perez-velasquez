@@ -13,6 +13,8 @@ document.addEventListener('DOMContentLoaded', function() {
     let nombreSelect = document.getElementById("nameInput");
     const reinicio = document.getElementById("reinicio");
     const dificultad = document.getElementById("gamemode");
+    const canvas = document.getElementById("miCanvas");
+    let ctx = canvas.getContext('2d');
 
     /**
      * Crea un nuevo juego, dependiendo si es necesario por un cambio de dificultad
@@ -21,6 +23,7 @@ document.addEventListener('DOMContentLoaded', function() {
      */
     let nuevoJuego = () => {
         reiniciarVariables();
+        limpiarCanvas(canvas);
         crearTablero();
         eventosCampo();
         crearCampo();
@@ -39,6 +42,15 @@ document.addEventListener('DOMContentLoaded', function() {
         nombreSelect.disabled = false;
         acumulado = 0;
         cronometrar = false;
+    };
+
+    /**
+     * esta funcion nos limpia el canvas para comenzar un nuevo juego y poder tirar confetti tranquilito
+     * @param canvas
+     * @method limpiarCanvas
+     */
+    let limpiarCanvas = (canvas) => {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
     };
 
     /**
@@ -223,13 +235,11 @@ document.addEventListener('DOMContentLoaded', function() {
         if(contador === minas){
             let tableroHTML = document.getElementById("tablero");
             tableroHTML.style.background = "green";
+            generarConfetti(canvas);
             estado = false;
             cronometrar = false;
-            /*
-            clearInterval(intervaloCronometro);
-             */
         }
-    }
+    };
 
     /**
      * Esta función se indica de ver si el jugador ha perdido, lo hace verificando si el
@@ -271,7 +281,7 @@ document.addEventListener('DOMContentLoaded', function() {
             for(let f = 0;f < filas;f++){
                 let casilla = document.getElementById(`casilla-${c}-${f}`);
                 casilla.addEventListener("mouseup",me =>{
-                     clic(casilla, c, f, me)
+                    clic(casilla, c, f, me)
                 })
             }
         }
@@ -421,6 +431,49 @@ document.addEventListener('DOMContentLoaded', function() {
 
         return H.ceros(2) + ":" + M.ceros(2) + ":" + S.ceros(2);
     }
+
+    /**
+     * Esta funcion me genera el confetti que sale cuando el jugador gana la partida, creando particulas de los
+     * diferentes colores seleccionados, para luego animarlos y obtener el festejo deseado
+     * @method generarConfetti
+     */
+    let generarConfetti = (canvas) => {
+        let particulas = [];
+
+        const colors = ['#8ecc75', '#528fd3', '#e081b7']; //Colores del Confetti
+
+        for (let i = 0; i < 300; i++) {
+            let x = Math.random() * canvas.width;
+            let y = Math.random() * canvas.height;
+            let size = Math.random() * 0.5 + 5;
+            let color = colors[Math.floor(Math.random() * colors.length)];
+            let speed = Math.random() * 30;
+            let rota = Math.random() * 360;
+
+            particulas.push({x, y, size, color, speed, rota});
+        }
+        /**
+         * Esta funcion anima el confetti para que caiga en cascada
+         * @method animarConfetti
+         */
+        let animarConfetti = () => {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for(let i=0; i<300; i++){
+                let particula = particulas[i];
+                particula.y += particula.speed;
+                ctx.beginPath();
+                ctx.save();
+                ctx.fillStyle = particula.color;
+                ctx.translate(particula.x, particula.y);
+                ctx.rotate(-particula.rota * Math.PI / 180);
+                ctx.fillRect(-particula.size/2, -particula.size/2, particula.size, particula.size);
+                ctx.restore();
+                ctx.closePath();
+            }
+            requestAnimationFrame(animarConfetti);
+        };
+        animarConfetti();
+    };
 
     nuevoJuego();
 });
