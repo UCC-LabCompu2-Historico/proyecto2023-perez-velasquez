@@ -6,7 +6,7 @@ Estructura de Proyecto Lab de Compu II - 2023
 * **Velásquez Borda**, Mateo Josué.
 
 ## Link a la página:
-https://ucc-labcompu2.github.io/proyecto2023-perez-velasquez/
+https://ucc-labcompu2-historico.github.io/proyecto2023-perez-velasquez/
 
 ## Tecnologías usadas:
 * Git.
